@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: restaurant
+    
+  #Conexion a Base de Datos
+  datasource:
+    url: jdbc:mysql://localhost:3306/restaurant_db?useSSL=false&serverTimezone=UTC
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update # cambiar a validate o none en producción
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  thymeleaf:
+    cache: false
+  servlet:
+    multipart:
+      enabled: true
+server:
+  port: 8080
