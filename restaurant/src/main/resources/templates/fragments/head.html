@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <!-- Fragmento para el head con metadatos y CSS -->
+    <th:block th:fragment="head(title)">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Venta de pollos y platos peruanos">
+        <meta name="keywords" content="pollos,pollo a la brasa, bebidas, platos peruanos">
+        
+        <!-- Primary Meta Tags -->
+        <title th:text="${title} + ' - Ñorkys - Pollos y Sabor Tradicional'">Ñorkys - Pollos y Sabor Tradicional</title>
+        <meta name="title" content="Ñorkys - Pollos y Sabor Tradicional" />
+        <meta name="description" content="Disfruta del auténtico sabor peruano en Ñorkys. Pide tu pollo a la brasa, revisa nuestra carta online y haz tu pedido para delivery o reserva desde la web." />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://metatags.io/" />
+        <meta property="og:title" content="Ñorkys - Pollos y Sabor Tradicional" />
+        <meta property="og:description" content="Disfruta del auténtico sabor peruano en Ñorkys. Pide tu pollo a la brasa, revisa nuestra carta online y haz tu pedido para delivery o reserva desde la web." />
+        <meta property="og:image" content="img/ñorkys-logo" />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://metatags.io/" />
+        <meta property="twitter:title" content="Ñorkys - Pollos y Sabor Tradicional" />
+        <meta property="twitter:description" content="Disfruta del auténtico sabor peruano en Ñorkys. Pide tu pollo a la brasa, revisa nuestra carta online y haz tu pedido para delivery o reserva desde la web." />
+        <meta property="twitter:image" content="img/ñorkys-logo.png" />
+        
+        <link rel="icon" th:href="@{/img/logo-ñorkys-small.png}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
+        <!-- CSS específicos -->
+        <link rel="stylesheet" th:href="@{/css/common.css}">
+        <link rel="stylesheet" th:href="@{/css/navbar.css}">
+        <link rel="stylesheet" th:href="@{/css/footer.css}">
+    </th:block>
+    
+    <!-- Fragmento para scripts -->
+    <th:block th:fragment="scripts">
+        <script th:src="@{/js/main.js}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    </th:block>
+</body>
+</html>

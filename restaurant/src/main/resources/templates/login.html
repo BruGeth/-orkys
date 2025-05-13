@@ -1,199 +1,68 @@
 <!DOCTYPE html>
-<html lang="es">
-    <html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Iniciar Sesión</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="login.css">
+    <!-- Incluir fragmento head con título "Iniciar Sesión" -->
+    <th:block th:replace="fragments/head :: head(title='Iniciar Sesión')"></th:block>
+    <!-- CSS para autenticación -->
+    <link rel="stylesheet" th:href="@{/css/auth-common.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 <body>
-    <!---------------- NAV SECTION --------------->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a href="index.html"><img class="logo" src="img/logo.png"></a>
-
-            <!-- LOGIN BUTTON -->
-            <div class="d-lg-none d-flex align-items-center ms-auto gap-2">
-                <button class="navbar-toggler btn-login-toggler" type="button" onclick="location.href='login.html'">
-                    <span class="login-toggler-icon d-flex justify-content-center align-items-center">
-                        <i class="fas fa-user"></i>
-                    </span>
-                </button>
-            
-                <!-- NAV BUTTON -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-
-            <!-- MENU FOR PC -->
-            
-            <ul class="navbar-nav d-none d-lg-flex ms-auto menu-pc">
-                <li class="nav-item px-3"><a href="#" class="nav-link">CARTA</a></li>
-                <li class="nav-item px-3"><a href="#" class="nav-link">PROMOCIONES</a></li>
-                <li class="nav-item px-3"><a href="#" class="nav-link">LOCALES</a></li>
-                <li class="nav-item px-3">
-                    <a href="login.html" class="nav-link link--login">
-                        INICIAR SESIÓN
-                        <i class="bi bi-person fs-5 icon-login"></i>
-                    </a>
-                </li>
-            </ul>
-
-            <!-- OFF CANVAS MAIN CONTAINER -->
-            <section class="offcanvas offcanvas-start" id="menuLateral" tabindex="-1">
-                <div class="offcanvas-header">
-                        <h5 class="offcanvas-title">MENÚ</h5>
-                    <button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="offcanvas"></button>
-                </div>
-                <!-- OFF CANVAS MENU LINKS START -->
-                <div class="offcanvas-body d-flex flex-column justify-content-between px-0">
-                    <ul class="navbar-nav justify-content-evenly">
-                        <li class="nav-item p-3"><a href="#" class="nav-link">CARTA</a></li>
-                        <li class="nav-item p-3"><a href="#" class="nav-link">PROMOCIONES</a></li>
-                        <li class="nav-item p-3"><a href="#" class="nav-link">LOCALES</a></li>
-                    </ul>
-                    <!-- SOCIAL MEDIA LINKS -->
-
-                    <div class="d-lg-none align-self-center py-3">
-                        <a href="#"><i class="bi bi-facebook px-2 fs-2"></i>
-                        </a>
-                        <a href="#"><i class="bi bi-instagram px-2 fs-2"></i>
-                        </a>
-                        <a href="#"><i class="bi bi-whatsapp px-2 fs-2"></i>
-                        </a>
-                    </div>
-                </div>
-            </section>
-            <!-- OFFCANVAS MAIN CONTAINER END -->
-        </div>
-    </nav>
-    <!--------------------- END NAV SECTION ----------------------->
-
+    <!-- Incluir fragmento navbar -->
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    
     <div class="form-container">
         <h3 class="text-center fw-bold mb-4 text-success">Iniciar Sesión</h3>
 
-    <form action="#" method="POST">
-
-    <!-- Correo Electrónico -->
-    <div class="mb-3">
-        <label for="email" class="form-label">Correo Electrónico</label>
-        <div class="input-group">
-            <span class="input-group-text bg-success text-white"><i class="bi bi-envelope"></i></span>
-            <input type="email" class="form-control" id="email" name="email" placeholder="correo@ejemplo.com" required>
+        <!-- Mensajes de alerta -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <div class="invalid-feedback">Por favor, ingresa un correo válido.</div>
-    </div>
-
-    <!-- Contraseña -->
-    <div class="mb-3">
-        <label for="contraseña" class="form-label">Contraseña</label>
-        <div class="input-group">
-            <span class="input-group-text bg-success text-white"><i class="bi bi-lock"></i></span>
-            <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="" required minlength="6">
+        
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
-    </div>
 
-    <button type="submit" class="btn btn-success text-warning fw-bold w-100 mt-3">Ingresar</button>
-    </form>
-
-<p class="text-center mt-3 mb-0">
-    ¿No tienes una cuenta?
-    <a href="register.html" class="text-success fw-semibold">Regístrate aquí</a>
-</p>
-</div>
-    <footer class="footer pt-5 pb-1">
-        <div class="container-footer">
-            <div class="row text-center text-md-start">
-                <!-- DEFINIENDO LA COLUMNA EN DIFERENTES DISPOSITIVOS -->
-                <div class="footer-column col-lg-4 col-xl-2">
-                    <h5 class="footer-title text-uppercase">Nosotros</h5>
-                    <ul class="footer-list ps-0">
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">¿Quienes Somos?</a>
-                        </li>
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">Trabaja con nosotros</a>
-                        </li>
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">Locales</a>
-                        </li>
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">Terminos y Condiciones de promociones</a>
-                        </li>
-                    </ul>
+        <form th:action="@{/login}" method="POST">
+            <!-- Correo Electrónico -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo Electrónico</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-success text-white"><i class="bi bi-envelope"></i></span>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="correo@ejemplo.com" required>
                 </div>
-                <div class="footer-column col-md-2 col-lg-3 col-xl-2">
-                    <h5 class="footer-title text-uppercase font-weight">Legal</h5>
-                    <ul class="footer-list ps-0">
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">Términos y condiciones</a>
-                        </li>
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">Políticas de privacidad</a>
-                        </li>
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">Legales</a>
-                        </li>
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">Razones sociales y RUC</a>
-                        </li>
-                        <li class="footer-item">
-                            <a href="LibroReclamaciones.html" class="footer-link">LIBRO DE RECLAMACIONES</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="footer-column col-md-2 col-lg-3 col-xl-2">
-                    <h5 class="footer-title text-uppercase font-weight">Contáctanos</h5>
-                    <ul class="footer-list contact-list ps-0">
-                        <li class="footer-item mb-2">
-                            <i class="fas fa-home me-2"></i> Cerru, ciudad Lema
-                        </li>
-                        <li class="footer-item mb-2">
-                            <i class="fas fa-envelope me-2"></i> ñorkys@gmail.com
-                        </li>
-                        <li class="footer-item">
-                            <i class="fas fa-phone me-2"></i> +999 888 777
-                        </li>
-                    </ul>
-                </div>
-                <hr class="mb-4">
-                <div class="text-center mb-2">
-                    <p>
-                        Copyright Todos los derechos reservados
-                        <a href="#" class="footer-link">
-                            <strong>Ñorkys</strong>
-                        </a>
-                    </p>
-                </div>
-                <div class="icons-container text-center">
-                    <ul class="list-unstyled list-inline">
-                        <li class="list-inline-item">
-                            <a href="#" class="footer-link footer-icon-social icon-fb">
-                                <i class="fab fa-facebook"></i>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#" class="footer-link footer-icon-social icon-ig">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#" class="footer-link footer-icon-social icon-ws">
-                                <i class="fab fa-whatsapp"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <div class="invalid-feedback">Por favor, ingresa un correo válido.</div>
             </div>
-        </div>
-    </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Contraseña -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-success text-white"><i class="bi bi-lock"></i></span>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="" required minlength="6">
+                </div>
+                <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+            </div>
+
+            <button type="submit" class="btn btn-success text-warning fw-bold w-100 mt-3">Ingresar</button>
+        </form>
+
+        <p class="text-center mt-3 mb-0">
+            ¿No tienes una cuenta?
+            <a th:href="@{/register}" class="text-success fw-semibold">Regístrate aquí</a>
+        </p>
+        
+        <p class="text-center mt-2">
+            <a th:href="@{/forgot-password}" class="text-muted">¿Olvidaste tu contraseña?</a>
+        </p>
+    </div>
+    
+    <!-- Incluir fragmento footer -->
+    <footer th:replace="fragments/footer :: footer"></footer>
+    
+    <!-- Incluir fragmento scripts -->
+    <th:block th:replace="fragments/head :: scripts"></th:block>
 </body>
 </html>

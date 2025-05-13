@@ -1,0 +1,193 @@
+/* --------------------- NAVBAR --------------------- */
+.navbar {
+  background-color: #fff;
+  position: sticky !important;
+  top: 0;
+  z-index: 1550;
+  box-shadow: 0px 0px 7px #000;
+  width: 100%;
+}
+
+/* -------- MENU PC (SCREEN 992PX) ------- */
+@media screen and (min-width: 992px) {
+  .navbar {
+    padding-top: .1rem;
+    padding-bottom: .1rem;
+    min-height: 70px;
+  }
+
+  .navbar .container-fluid {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .menu-pc .nav-link {
+    padding: 0.3rem 0; /* LESS PADDING UP */
+    font-size: 1.1rem;
+  }
+
+  .menu-pc {
+    display: flex !important;
+    gap: 1rem;
+  }
+
+  .menu-pc,
+  .nav-link {
+    color: #000;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    padding: 0.2rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 2px;
+  }
+
+  .menu-pc .nav-link:not(.link--login):hover {
+    transform: translateY(-2px);
+    border-bottom: 2px solid #2b9141;
+  }
+
+  .menu-pc .icon-login {
+    font-size: 1rem;
+    position: relative;
+    top: 0;
+  }
+
+  .menu-pc .link--login {
+    color: #00833e;
+  }
+
+  .menu-pc .link--login:hover {
+    transition: all 0.3s ease;
+    text-shadow: 0px 0px 16px #00833e;
+  }
+
+  .logo {
+    height: auto;
+    max-height: 90px;
+    width: auto;
+    cursor: pointer;
+  }
+}
+
+/* ---------------- MENU MOBILE (OFFCANVAS) ---------------- */
+.offcanvas {
+  background-color: #00833e;
+}
+
+/* HIDDEN MOBILE MENU IN LG */
+@media screen and (min-width: 992px) {
+  .offcanvas {
+    display: none !important;
+  }
+}
+
+/* STYLES ONLY FOR OFFCANVAS MOBILE */
+@media screen and (max-width: 991.98px) {
+  .offcanvas .offcanvas-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .offcanvas .nav-link,
+  .offcanvas .offcanvas-title {
+    color: #fff;
+  }
+
+  .navbar {
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    position: sticky !important;
+    z-index: 1550;
+    top: 0;
+    width: 100%;
+  }
+
+  .navbar .container-fluid {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .logo {
+    height: auto;
+    max-height: 90px;
+    width: auto;
+    cursor: pointer;
+  }
+
+  .navbar-toggler {
+    padding: 0.25rem 0.5rem;
+  }
+
+  .navbar-toggler-icon {
+    width: 1.5em;
+    height: 1.5em;
+  }
+
+  .navbar-nav .nav-link {
+    color: #fff;
+  }
+
+  .bi {
+    color: #fff;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+/*--RESPONSIVE FOR IPHONE 12 PRO--*/
+@media screen and (max-width: 420px) {
+  .offcanvas-start {
+    width: 80vw !important;
+    max-width: 330px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* --------------------- BURGUER BUTTON --------------------- */
+.navbar-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.offcanvas .btn-close {
+  filter: invert(1);
+  opacity: 1;
+}
+
+.offcanvas .btn-close:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/*--LOGIN BUTTON--*/
+
+.btn-login-toggler {
+  padding: 0.25rem 0.5rem;
+  border: none;
+  background: transparent;
+}
+
+.btn-login-toggler i {
+  font-size: 1.6rem;
+  color: #000;
+  transition: transform 0.2s ease;
+}
+
+.btn-login-toggler:hover i {
+  transform: scale(1.1);
+  color: #00833e;
+}
+
+.login-toggler-icon {
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 13px;
+}

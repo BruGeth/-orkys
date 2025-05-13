@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <!-- Fragmento de Footer -->
+    <footer th:fragment="footer" class="footer pt-5 pb-1">
+        <div class="container-footer">
+            <div class="row text-center text-md-start">
+                <!-- DEFINIENDO LA COLUMNA EN DIFERENTES DISPOSITIVOS -->
+                <div class="footer-column col-lg-4 col-xl-2">
+                    <h5 class="footer-title text-uppercase">Nosotros</h5>
+                    <ul class="footer-list ps-0">
+                        <li class="footer-item">
+                            <a th:href="@{/nosotros}" class="footer-link">¿Quienes Somos?</a>
+                        </li>
+                        <li class="footer-item">
+                            <a th:href="@{/trabaja-con-nosotros}" class="footer-link">Trabaja con nosotros</a>
+                        </li>
+                        <li class="footer-item">
+                            <a th:href="@{/locales}" class="footer-link">Locales</a>
+                        </li>
+                        <li class="footer-item">
+                            <a th:href="@{/terminos-promociones}" class="footer-link">Terminos y Condiciones de promociones</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-column col-md-2 col-lg-3 col-xl-2">
+                    <h5 class="footer-title text-uppercase font-weight">Legal</h5>
+                    <ul class="footer-list ps-0">
+                        <li class="footer-item">
+                            <a th:href="@{/terminos}" class="footer-link">Términos y condiciones</a>
+                        </li>
+                        <li class="footer-item">
+                            <a th:href="@{/privacidad}" class="footer-link">Políticas de privacidad</a>
+                        </li>
+                        <li class="footer-item">
+                            <a th:href="@{/legales}" class="footer-link">Legales</a>
+                        </li>
+                        <li class="footer-item">
+                            <a th:href="@{/razones-sociales}" class="footer-link">Razones sociales y RUC</a>
+                        </li>
+                        <li class="footer-item">
+                            <a th:href="@{/libro-reclamaciones}" class="footer-link">LIBRO DE RECLAMACIONES</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-column col-md-2 col-lg-3 col-xl-2">
+                    <h5 class="footer-title text-uppercase font-weight">Contáctanos</h5>
+                    <ul class="footer-list contact-list ps-0">
+                        <li class="footer-item mb-2">
+                            <i class="fas fa-home me-2"></i> Lima, Perú
+                        </li>
+                        <li class="footer-item mb-2">
+                            <i class="fas fa-envelope me-2"></i> ñorkys@gmail.com
+                        </li>
+                        <li class="footer-item">
+                            <i class="fas fa-phone me-2"></i> +999 888 777
+                        </li>
+                    </ul>
+                </div>
+                <hr class="mb-4">
+                <div class="text-center mb-2">
+                    <p>
+                        Copyright Todos los derechos reservados
+                        <a th:href="@{/}" class="footer-link">
+                            <strong>Ñorkys</strong>
+                        </a>
+                    </p>
+                </div>
+                <div class="icons-container text-center">
+                    <ul class="list-unstyled list-inline">
+                        <li class="list-inline-item">
+                            <a href="#" class="footer-link footer-icon-social icon-fb">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="footer-link footer-icon-social icon-ig">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="footer-link footer-icon-social icon-ws">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
