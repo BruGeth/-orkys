@@ -1,0 +1,160 @@
+/*------------ FOOTER SECTION --------------*/
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  background-color: #1b1b1b;
+  color: #fff;
+  font-size: 18px;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.footer .container-footer {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer .row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 200px;
+  margin: 20px;
+}
+
+.footer-column h5 {
+  margin-bottom: 15px;
+  border-bottom: 2px solid green;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.footer-title {
+  font-size: 20px;
+  display: inline-block;
+  font-weight: bold;
+  border-bottom: 3px solid #00833e;
+  padding-bottom: 6px;
+  margin-bottom: 0.95rem;
+}
+
+.footer-list,
+.contact-list {
+  padding-left: 0;
+  margin-left: 0;
+  list-style: none;
+}
+
+.footer-item,
+.fas {
+  margin-bottom: .9rem;
+}
+
+.footer-link {
+  text-decoration: none;
+  color: inherit;
+  transition: all .3s ease;
+}
+
+.footer-link:hover {
+  color: #00833e;
+}
+
+.footer-icon-social {
+  font-size: 20px;
+}
+
+.icon-fb:hover {
+  color: #48e;
+}
+
+.icon-ig:hover {
+  color: #e91e63;
+}
+
+.icon-ws:hover {
+  color: #00833e;
+}
+
+.icons-container {
+  margin-top: -40px;
+}
+
+@media screen and (max-width: 991.98px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer .container-footer {
+    padding-left: 0;
+  }
+
+  .footer .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-column {
+    margin: 20px 0;
+    width: 100%;
+  }
+
+  .footer-icons {
+    justify-content: center;
+  }
+
+  .footer-icons a {
+    margin: 0 10px;
+  }
+}
+
+/* --RESPONSIVE FOR TABLET--*/
+@media screen and (max-width: 1024px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer .container-footer {
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer .row {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .footer-column {
+    text-align: center;
+    margin: 20px 0;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .footer-icons {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .footer-icons a {
+    margin: 0 10px;
+  }
+}
