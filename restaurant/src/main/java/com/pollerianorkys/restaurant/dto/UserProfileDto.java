@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class UserRegistrationDto {
+public class UserProfileDto {
 
     @NotBlank(message = "El nombre es obligatorio")
     @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
@@ -24,13 +24,4 @@ public class UserRegistrationDto {
     @NotBlank(message = "El número de teléfono es obligatorio")
     @Pattern(regexp = "^[0-9]{9,15}$", message = "El teléfono debe contener entre 9 y 15 dígitos")
     private String phone;
-
-    @NotBlank(message = "El nombre de usuario es obligatorio")
-    @Size(min = 4, max = 20, message = "El nombre de usuario debe tener entre 4 y 20 caracteres")
-    @Pattern(regexp = "^[a-zA-Z0-9._-]{4,20}$", message = "El nombre de usuario solo puede contener letras, números, puntos, guiones y guiones bajos")
-    private String username;
-
-    @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
-    private String password;
 }

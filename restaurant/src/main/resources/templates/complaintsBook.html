@@ -16,7 +16,18 @@
             <p class="fecha">Fecha de registro: <span id="fecha-registro"></span></p>
         </header>
 
-        <form id="reclamacion-form" th:action="@{/libro-reclamaciones/submit}" method="post">
+        <!-- Mensajes de alerta -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <form id="reclamacion-form" th:action="@{/complaints/submit}" method="post">
             <!-- 1.ELECCIÓN DEL RESTAURANTE -->
             <section>
                 <h2>1. Elección del restaurante</h2>

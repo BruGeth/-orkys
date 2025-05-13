@@ -2,6 +2,3 @@ spring:
   datasource:
     username: root
     password: null
-  mail:
-    username: nhorkyspolleria@gmail.com
-    password: katwrdwvzqflgxqb
