@@ -25,15 +25,15 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 
-        <form th:action="@{/login}" method="POST">
-            <!-- Correo Electrónico -->
+        <form th:action="@{/auth/login}" method="POST" th:object="${loginRequest}">
+            <!-- Username o Email -->
             <div class="mb-3">
-                <label for="email" class="form-label">Correo Electrónico</label>
+                <label for="username" class="form-label">Usuario o Correo Electrónico</label>
                 <div class="input-group">
-                    <span class="input-group-text bg-success text-white"><i class="bi bi-envelope"></i></span>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="correo@ejemplo.com" required>
+                    <span class="input-group-text bg-success text-white"><i class="bi bi-person"></i></span>
+                    <input type="text" class="form-control" id="username" th:field="*{username}" placeholder="Usuario o correo" required>
                 </div>
-                <div class="invalid-feedback">Por favor, ingresa un correo válido.</div>
+                <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
             </div>
 
             <!-- Contraseña -->
@@ -41,21 +41,23 @@
                 <label for="password" class="form-label">Contraseña</label>
                 <div class="input-group">
                     <span class="input-group-text bg-success text-white"><i class="bi bi-lock"></i></span>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="" required minlength="6">
+                    <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="" required minlength="6">
                 </div>
-                <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+                <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            </div>
+            
+            <!-- Recordarme -->
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="remember-me" th:field="*{rememberMe}">
+                <label class="form-check-label" for="remember-me">Recordarme</label>
             </div>
 
-            <button type="submit" class="btn btn-success text-warning fw-bold w-100 mt-3">Ingresar</button>
+            <button type="submit" class="btn btn-success w-100 mt-3">Ingresar</button>
         </form>
 
         <p class="text-center mt-3 mb-0">
             ¿No tienes una cuenta?
-            <a th:href="@{/register}" class="text-success fw-semibold">Regístrate aquí</a>
-        </p>
-        
-        <p class="text-center mt-2">
-            <a th:href="@{/forgot-password}" class="text-muted">¿Olvidaste tu contraseña?</a>
+            <a th:href="@{/auth/register}" class="text-success fw-semibold">Regístrate aquí</a>
         </p>
     </div>
     

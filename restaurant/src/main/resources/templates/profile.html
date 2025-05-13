@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
+<head>
+    <!-- Incluir fragmento head con título "Mi Perfil" -->
+    <th:block th:replace="fragments/head :: head(title='Mi Perfil')"></th:block>
+    <!-- CSS específico para esta página -->
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+</head>
+<body>
+    <!-- Incluir fragmento navbar -->
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    
+    <div class="container my-5">
+        <!-- Mensajes de alerta -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="card profile-sidebar">
+                    <div class="card-body text-center">
+                        <div class="profile-image mb-3">
+                            <i class="bi bi-person-circle"></i>
+                        </div>
+                        <h4 class="mb-1" sec:authentication="name">Usuario</h4>
+                        <p class="text-muted">Cliente</p>
+                        
+                        <div class="profile-menu">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#profile-info" data-bs-toggle="tab">
+                                        <i class="bi bi-person"></i> Información Personal
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#orders" data-bs-toggle="tab">
+                                        <i class="bi bi-bag"></i> Mis Pedidos
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#addresses" data-bs-toggle="tab">
+                                        <i class="bi bi-geo-alt"></i> Mis Direcciones
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#security" data-bs-toggle="tab">
+                                        <i class="bi bi-shield-lock"></i> Seguridad
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <form th:action="@{/auth/logout}" method="post">
+                                        <button type="submit" class="nav-link text-danger border-0 bg-transparent w-100 text-start">
+                                            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-8">
+                <div class="tab-content">
+                    <!-- Información Personal -->
+                    <div class="tab-pane fade show active" id="profile-info">
+                        <div class="card">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0">Información Personal</h5>
+                            </div>
+                            <div class="card-body">
+                                <form th:action="@{/user/profile/update}" th:object="${userProfile}" method="post">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="firstName" class="form-label">Nombre</label>
+                                            <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
+                                            <div class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="lastName" class="form-label">Apellido</label>
+                                            <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
+                                            <div class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="email" class="form-label">Correo Electrónico</label>
+                                            <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                                            <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="phone" class="form-label">Teléfono</label>
+                                            <input type="tel" class="form-control" id="phone" th:field="*{phone}" required>
+                                            <div class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-end">
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="bi bi-save"></i> Guardar Cambios
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mis Pedidos -->
+                    <div class="tab-pane fade" id="orders">
+                        <div class="card">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0">Mis Pedidos</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-info">
+                                    <i class="bi bi-info-circle"></i> No tienes pedidos recientes.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mis Direcciones -->
+                    <div class="tab-pane fade" id="addresses">
+                        <div class="card">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0">Mis Direcciones</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-info">
+                                    <i class="bi bi-info-circle"></i> No tienes direcciones guardadas.
+                                </div>
+                                <button class="btn btn-success">
+                                    <i class="bi bi-plus-circle"></i> Agregar Nueva Dirección
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Seguridad -->
+                    <div class="tab-pane fade" id="security">
+                        <div class="card">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0">Seguridad</h5>
+                            </div>
+                            <div class="card-body">
+                                <form th:action="@{/user/profile/change-password}" th:object="${passwordChange}" method="post">
+                                    <div class="mb-3">
+                                        <label for="currentPassword" class="form-label">Contraseña Actual</label>
+                                        <input type="password" class="form-control" id="currentPassword" th:field="*{currentPassword}" required>
+                                        <div class="text-danger" th:if="${#fields.hasErrors('currentPassword')}" th:errors="*{currentPassword}"></div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="newPassword" class="form-label">Nueva Contraseña</label>
+                                        <input type="password" class="form-control" id="newPassword" th:field="*{newPassword}" required>
+                                        <div class="text-danger" th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"></div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="confirmPassword" class="form-label">Confirmar Nueva Contraseña</label>
+                                        <input type="password" class="form-control" id="confirmPassword" th:field="*{confirmPassword}" required>
+                                        <div class="text-danger" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+                                    </div>
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="bi bi-shield-check"></i> Cambiar Contraseña
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Incluir fragmento footer -->
+    <footer th:replace="fragments/footer :: footer"></footer>
+    
+    <!-- Incluir fragmento scripts -->
+    <th:block th:replace="fragments/head :: scripts"></th:block>
+    
+    <!-- Script específico para esta página -->
+    <script th:src="@{/js/profile.js}"></script>
+</body>
+</html>

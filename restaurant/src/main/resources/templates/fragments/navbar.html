@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
 </head>
@@ -7,11 +7,31 @@
     <!-- Fragmento de Navbar -->
     <nav th:fragment="navbar" class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a th:href="@{/}"><img class="logo" th:src="@{/img/logo.png}" alt="Logo Ñorkys"></a>
+            <a th:href="@{/home}"><img class="logo" th:src="@{/img/logo.png}" alt="Logo Ñorkys"></a>
 
             <!-- LOGIN BUTTON -->
             <div class="d-lg-none d-flex align-items-center ms-auto gap-2">
-                <button class="navbar-toggler btn-login-toggler" type="button" onclick="location.href='login.html'">
+                <!-- Si el usuario está autenticado, mostrar icono de usuario con menú desplegable -->
+                <div sec:authorize="isAuthenticated()" class="dropdown">
+                    <button class="navbar-toggler btn-login-toggler" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="login-toggler-icon d-flex justify-content-center align-items-center">
+                            <i class="fas fa-user-circle"></i>
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" th:href="@{/user/profile}">Mi Perfil</a></li>
+                        <li><a class="dropdown-item" th:href="@{/user/orders}">Mis Pedidos</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form th:action="@{/auth/logout}" method="post" class="dropdown-item p-0">
+                                <button type="submit" class="btn btn-link text-danger w-100 text-start">Cerrar Sesión</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Si el usuario no está autenticado, mostrar botón de login -->
+                <button sec:authorize="!isAuthenticated()" class="navbar-toggler btn-login-toggler" type="button" onclick="location.href='/auth/login'">
                     <span class="login-toggler-icon d-flex justify-content-center align-items-center">
                         <i class="fas fa-user"></i>
                     </span>
@@ -28,8 +48,28 @@
                 <li class="nav-item px-3"><a th:href="@{/carta}" class="nav-link">CARTA</a></li>
                 <li class="nav-item px-3"><a th:href="@{/promociones}" class="nav-link">PROMOCIONES</a></li>
                 <li class="nav-item px-3"><a th:href="@{/locales}" class="nav-link">LOCALES</a></li>
-                <li class="nav-item px-3">
-                    <a th:href="@{/login}" class="nav-link link--login">
+                
+                <!-- Si el usuario está autenticado, mostrar menú desplegable -->
+                <li sec:authorize="isAuthenticated()" class="nav-item px-3 dropdown">
+                    <a class="nav-link link--login dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span sec:authentication="name"></span>
+                        <i class="bi bi-person-circle fs-5 icon-login"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" th:href="@{/user/profile}">Mi Perfil</a></li>
+                        <li><a class="dropdown-item" th:href="@{/user/orders}">Mis Pedidos</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form th:action="@{/auth/logout}" method="post" class="dropdown-item p-0">
+                                <button type="submit" class="btn btn-link text-danger w-100 text-start">Cerrar Sesión</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+                
+                <!-- Si el usuario no está autenticado, mostrar enlace de login -->
+                <li sec:authorize="!isAuthenticated()" class="nav-item px-3">
+                    <a th:href="@{/auth/login}" class="nav-link link--login">
                         INICIAR SESIÓN
                         <i class="bi bi-person fs-5 icon-login"></i>
                     </a>
@@ -48,6 +88,16 @@
                         <li class="nav-item p-3"><a th:href="@{/carta}" class="nav-link">CARTA</a></li>
                         <li class="nav-item p-3"><a th:href="@{/promociones}" class="nav-link">PROMOCIONES</a></li>
                         <li class="nav-item p-3"><a th:href="@{/locales}" class="nav-link">LOCALES</a></li>
+                 
+                        
+                        <!-- Opciones de usuario autenticado -->
+                        <li sec:authorize="isAuthenticated()" class="nav-item p-3"><a th:href="@{/user/profile}" class="nav-link">MI PERFIL</a></li>
+                        <li sec:authorize="isAuthenticated()" class="nav-item p-3"><a th:href="@{/user/orders}" class="nav-link">MIS PEDIDOS</a></li>
+                        <li sec:authorize="isAuthenticated()" class="nav-item p-3">
+                            <form th:action="@{/auth/logout}" method="post">
+                                <button type="submit" class="btn btn-link text-white p-0">CERRAR SESIÓN</button>
+                            </form>
+                        </li>
                     </ul>
                     <!-- SOCIAL MEDIA LINKS -->
                     <div class="d-lg-none align-self-center py-3">
