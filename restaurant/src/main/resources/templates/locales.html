@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Norky's - Nuestros Locales</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="Locales.css">
+</head>
+<body>
+    <!-- Incluir fragmento navbar -->
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+
+    <section class="hero">
+        <h1>NUESTROS LOCALES</h1>
+        <p>Encuentra el Ñorky's más cercano y disfruta del mejor pollo a la brasa del Perú</p>
+    </section>
+
+    <div class="container">
+        <div class="section-title">
+            <h2>TODOS LOS LOCALES</h2>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Buscar por distrito, dirección o zona...">
+            <button>Buscar</button>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active">Todos</button>
+            <button class="filter-btn">Lima Norte</button>
+            <button class="filter-btn">Lima Sur</button>
+            <button class="filter-btn">Callao</button>
+        </div>
+
+        <div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="ratio ratio-16x9 rounded shadow">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d249743.72044909732!2d-77.12786125!3d-12.0463731!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c5f619ee3ec7%3A0x14206cb9cc452e4a!2sLima!5e0!3m2!1ses!2spe!4v1715534433412!5m2!1ses!2spe" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <div class="locations-grid">
+            <!-- Local 1 - Lima Norte -->
+            <div class="location-card" data-district="lima-norte">
+                <div class="location-image">
+                    <img src="static.img/Olivos.jpg" alt="Norky's Los Olivos">
+                </div>
+                <div class="location-info">
+                    <div class="location-name">Norky's Los Olivos</div>
+                    <div class="location-address">Av. Alfredo Mendiola 3698, Los Olivos, Lima</div>
+                    <div class="location-hours">Lun-Dom: 11:00 am - 10:00 pm</div>
+                    <div class="location-actions">
+                        <a href="#" class="location-btn directions-btn">CÓMO LLEGAR</a>
+                        <a href="tel:+5112255678" class="location-btn call-btn">LLAMAR</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Local 2 - Lima Norte -->
+            <div class="location-card" data-district="lima-norte">
+                <div class="location-image">
+                    <img src="static.img/Independencia.jpg" alt="Norky's Independencia">
+                    <div class="featured-tag">DESTACADO</div>
+                </div>
+                <div class="location-info">
+                    <div class="location-name">Norky's Independencia</div>
+                    <div class="location-address">Av. Industrial 3424, Independencia, Lima</div>
+                    <div class="location-hours">Lun-Dom: 11:00 am - 10:00 pm</div>
+                    <div class="location-actions">
+                        <a href="#" class="location-btn directions-btn">CÓMO LLEGAR</a>
+                        <a href="tel:+5114827690" class="location-btn call-btn">LLAMAR</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Local 3 - Lima Sur -->
+            <div class="location-card" data-district="lima-sur">
+                <div class="location-image">
+                    <img src="static.img/SanJuan.jpg" alt="Norky's San Juan de Miraflores">
+                </div>
+                <div class="location-info">
+                    <div class="location-name">Norky's San Juan de Miraflores</div>
+                    <div class="location-address">Av. Los Héroes 530, San Juan de Miraflores, Lima</div>
+                    <div class="location-hours">Lun-Dom: 11:00 am - 10:00 pm</div>
+                    <div class="location-actions">
+                        <a href="#" class="location-btn directions-btn">CÓMO LLEGAR</a>
+                        <a href="tel:+5112289012" class="location-btn call-btn">LLAMAR</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Local 4 - Lima Sur -->
+            <div class="location-card" data-district="lima-sur">
+                <div class="location-image">
+                    <img src="static.img/VillaElSalvador.jpeg" alt="Norky's Villa El Salvador">
+                </div>
+                <div class="location-info">
+                    <div class="location-name">Norky's Villa El Salvador</div>
+                    <div class="location-address">Av. Revolución 1520, Villa El Salvador, Lima</div>
+                    <div class="location-hours">Lun-Dom: 11:00 am - 10:00 pm</div>
+                    <div class="location-actions">
+                        <a href="#" class="location-btn directions-btn">CÓMO LLEGAR</a>
+                        <a href="tel:+5112876543" class="location-btn call-btn">LLAMAR</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Local 5 - Callao -->
+            <div class="location-card" data-district="callao">
+                <div class="location-image">
+                    <img src="static.img/Callao.jpg" alt="Norky's Callao">
+                </div>
+                <div class="location-info">
+                    <div class="location-name">Norky's Callao</div>
+                    <div class="location-address">Av. Oscar R. Benavides 3866, Bellavista, Callao</div>
+                    <div class="location-hours">Lun-Dom: 11:00 am - 10:00 pm</div>
+                    <div class="location-actions">
+                        <a href="#" class="location-btn directions-btn">CÓMO LLEGAR</a>
+                        <a href="tel:+5114299012" class="location-btn call-btn">LLAMAR</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Local 6 - Callao -->
+            <div class="location-card" data-district="callao">
+                <div class="location-image">
+                    <img src="static.img/LaPerla.jpg" alt="Norky's La Perla">
+                    <div class="featured-tag">DESTACADO</div>
+                </div>
+                <div class="location-info">
+                    <div class="location-name">Norky's La Perla</div>
+                    <div class="location-address">Av. Santa Rosa 186, La Perla, Callao</div>
+                    <div class="location-hours">Lun-Dom: 11:00 am - 10:00 pm</div>
+                    <div class="location-actions">
+                        <a href="#" class="location-btn directions-btn">CÓMO LLEGAR</a>
+                        <a href="tel:+5114655432" class="location-btn call-btn">LLAMAR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Script para la funcionalidad de filtros
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const locationCards = document.querySelectorAll('.location-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Cambiar clase activa
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.textContent.toLowerCase();
+                    
+                    locationCards.forEach(card => {
+                        const district = card.getAttribute('data-district');
+                        
+                        if (filter === 'todos') {
+                            card.style.display = 'block';
+                        } else if (filter === 'lima norte' && district === 'lima-norte') {
+                            card.style.display = 'block';
+                        } else if (filter === 'lima sur' && district === 'lima-sur') {
+                            card.style.display = 'block';
+                        } else if (filter === 'callao' && district === 'callao') {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Funcionalidad de búsqueda
+            const searchInput = document.querySelector('.search-bar input');
+            const searchButton = document.querySelector('.search-bar button');
+            
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+                
+                locationCards.forEach(card => {
+                    const name = card.querySelector('.location-name').textContent.toLowerCase();
+                    const address = card.querySelector('.location-address').textContent.toLowerCase();
+                    
+                    if (name.includes(searchTerm) || address.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // Animación para las tarjetas al hacer scroll
+            const animateOnScroll = () => {
+                const cards = document.querySelectorAll('.location-card');
+                
+                cards.forEach((card) => {
+                    const cardPosition = card.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (cardPosition < screenPosition) {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Inicializar tarjetas con opacidad 0
+            document.querySelectorAll('.location-card').forEach((card) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+            
+            // Ejecutar animación en scroll
+            window.addEventListener('scroll', animateOnScroll);
+            // Ejecutar una vez al cargar para elementos visibles
+            animateOnScroll();
+        });
+    </script>
+     <!-- Incluir fragmento footer -->
+    <footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
