@@ -9,15 +9,20 @@ public class UserRegistrationDto {
 
     @NotBlank(message = "El nombre es obligatorio")
     private String firstName;
+
     @NotBlank(message = "El apellido es obligatorio")
     private String lastName;
-    @NotBlank(message = "El correo es oblligatorio")
-    @Email(message = "El correo debe ser valido")
+
+    @NotBlank(message = "El correo es obligatorio")
+    @Email(message = "El correo debe ser válido")
     private String email;
-    @NotBlank(message = "El numero de telefono es oblligatorio")
+
+    @NotBlank(message = "El número de teléfono es obligatorio")
     private String phone;
-    @NotBlank(message = "El nombre de usuario es oblligatorio")
+
+    @NotBlank(message = "El nombre de usuario es obligatorio")
     private String username;
+
     @NotBlank(message = "La contraseña es obligatoria")
     private String password;
 }

@@ -54,14 +54,6 @@ public class User {
     @NotBlank(message = "La contraseña es obligatoria")
     private String password;
 
-    // Código de verificación enviado por email
-    @Column(length = 6)
-    private String verificationCode;
-
-    // Indica si el usuario ya verificó su cuenta
-    @Column(nullable = false)
-    private boolean enabled = false;
-
     @CreationTimestamp
     private LocalDateTime createdAt;
 }
