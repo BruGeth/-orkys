@@ -1,88 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
-<head>
-    <!-- Incluir fragmento head con título "Libro de Reclamaciones" -->
-    <th:block th:replace="fragments/head :: head(title='Libro de Reclamaciones')"></th:block>
+    <head>
+        <!-- Incluir fragmento head con título "Libro de Reclamaciones" -->
+    <th:block th:replace="fragments/head :: head(title=#{titulo.reclamaciones})"></th:block>
     <!-- CSS específico para esta página -->
     <link rel="stylesheet" th:href="@{/css/complaintsBook.css}">
 </head>
 <body>
     <!-- Incluir fragmento navbar -->
     <nav th:replace="fragments/navbar :: navbar"></nav>
-    
+
+    <!-- Selector de idioma -->
+    <div style="text-align: right; padding: 1rem;">
+        <a th:href="@{/complaints/book(lang=es)}" th:text="#{idioma.espanol}">Español</a> |
+        <a th:href="@{/complaints/book(lang=en)}" th:text="#{idioma.ingles}">Inglés</a>
+    </div>
+
     <div class="container">
         <header>
-            <h1>HOJA DE RECLAMACIÓN [N° 000001404-2025/LDRV-01] </h1>
-            <p class="fecha">Fecha de registro: <span id="fecha-registro"></span></p>
+            <h1 th:text="#{reclamacion.titulo}">HOJA DE RECLAMACIÓN [N° 000001404-2025/LDRV-01]</h1>
+            <p class="fecha"><span th:text="#{reclamacion.fecha}">Fecha de registro:</span> <span id="fecha-registro"></span></p>
         </header>
 
-        <!-- Mensajes de alerta -->
-        <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
-            <span th:text="${success}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        
-        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-            <span th:text="${error}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-
-        <form id="reclamacion-form" th:action="@{/complaints/submit}" method="post">
+        <form id="reclamacion-form" th:action="@{/libro-reclamaciones/submit}" method="post">
             <!-- 1.ELECCIÓN DEL RESTAURANTE -->
             <section>
-                <h2>1. Elección del restaurante</h2>
+                <h2 th:text="#{reclamacion.seccion.restaurante}">1. Elección del restaurante</h2>
                 <select name="restaurante" required>
-                    <option value="">-- Seleccionar --</option>
+                    <option value="">-- <span th:text="#{reclamacion.seleccionar}">Seleccionar</span> --</option>
                     <option value="Ñorkys San Isidro">Ñorkys San Isidro</option>
                     <option value="Ñorkys Miraflores">Ñorkys Miraflores</option>
                 </select>
                 <div class="info-local">
-                    <p><strong>Razón Social:</strong> Ñorkys S.A.C</p>
-                    <p><strong>RUC:</strong> 12345678901</p>
-                    <p><strong>Dirección fiscal:</strong> Av. Perú 1234, Lima</p>
+                    <p><strong th:text="#{reclamacion.razonSocialLabel}">Razón Social:</strong> Ñorkys S.A.C</p>
+                    <p><strong th:text="#{reclamacion.rucLabel}">RUC:</strong> 12345678901</p>
+                    <p><strong th:text="#{reclamacion.direccionFiscalLabel}">Dirección fiscal:</strong> Av. Perú 1234, Lima</p>
                 </div>        
             </section>
 
             <!-- 2.DATOS DEL CONSUMIDOR-->
             <section>
-                <h2>2. Datos del Consumidor</h2>
-                <input type="text" name="nombreCompleto" placeholder="Nombre y Apellidos" required />
+                <h2 th:text="#{reclamacion.seccion.consumidor}">2. Datos del Consumidor</h2>
+                <input type="text" name="nombreCompleto" th:placeholder="#{reclamacion.nombreCompleto}" required />
                 <div class="input-row">
-                    <input type="text" name="departamento" placeholder="Departamento" required />
-                    <input type="text" name="direccion" placeholder="Dirección" required />
+                    <input type="text" name="departamento" th:placeholder="#{reclamacion.departamento}" required />
+                    <input type="text" name="direccion" th:placeholder="#{reclamacion.direccion}" required />
                 </div>
                 <div class="input-row">
-                    <input type="text" name="documento" placeholder="DNI/C.E." required />
-                    <input type="text" name="telefono" placeholder="Teléfono" required />
+                    <input type="text" name="documento" th:placeholder="#{reclamacion.documento}" required />
+                    <input type="text" name="telefono" th:placeholder="#{reclamacion.telefono}" required />
                 </div>
-                <input type="email" name="email" placeholder="Email" required />
-                <input type="text" name="celular" placeholder="Celular" />
+                <input type="email" name="email" th:placeholder="#{reclamacion.email}" required />
+                <input type="text" name="celular" th:placeholder="#{reclamacion.celular}" />
             </section>
 
             <!-- 3.PRODUCTO O SERVICIO -->
             <section>
-                <h2>3. Producto o Servicio</h2>
+                <h2 th:text="#{reclamacion.seccion.producto}">3. Producto o Servicio</h2>
                 <div class="radio-group">
-                    <label><input type="radio" name="tipo" value="producto" required /> Producto</label>
-                    <label><input type="radio" name="tipo" value="servicio" /> Servicio</label>
+                    <label><input type="radio" name="tipo" value="producto" required /> <span th:text="#{reclamacion.producto}">Producto</span></label>
+                    <label><input type="radio" name="tipo" value="servicio" /> <span th:text="#{reclamacion.servicio}">Servicio</span></label>
                 </div>
                 <div class="input-row">
-                    <input type="text" name="numeroPedido" placeholder="N° de pedido" />
+                    <input type="text" name="numeroPedido" th:placeholder="#{reclamacion.numeroPedido}" />
                     <input type="date" name="fechaPedido" />
                 </div>
                 <div class="input-row">
                     <select name="canalPedido">
-                        <option value="">-- Canal de pedido --</option>
-                        <option value="Delivery">Delivery</option>
-                        <option value="Presencial">Presencial</option>
+                        <option value="">-- <span th:text="#{reclamacion.canalPedido}">Canal de pedido</span> --</option>
+                        <option value="Delivery" th:text="#{reclamacion.delivery}">Delivery</option>
+                        <option value="Presencial" th:text="#{reclamacion.presencial}">Presencial</option>
                     </select>
-                    <input type="text" name="montoReclamado" placeholder="Monto reclamado" />
+                    <input type="text" name="montoReclamado" th:placeholder="#{reclamacion.montoReclamado}" />
                 </div>
-                <textarea name="detallePedido" placeholder="Detalle del pedido (Máx. 500 caracteres)" maxlength="500"></textarea>
+                <textarea name="detallePedido" th:placeholder="#{reclamacion.detallePedido}" maxlength="500"></textarea>
 
                 <!-- IMAGEN -->
                 <div class="file-upload">
-                    <label for="imagen-reclamo">Agregar imagen del reclamo (opcional):</label>
+                    <label for="imagen-reclamo" th:text="#{reclamacion.imagen}">Agregar imagen del reclamo (opcional):</label>
                     <input type="file" id="imagen-reclamo" name="imagenReclamo" accept="image/*" />
                     <div id="preview-container">
                         <img id="preview" src="/placeholder.svg" alt="" style="display: none;" />
@@ -92,45 +87,48 @@
 
             <!-- 4.RECLAMACIÓN O QUEJA -->
             <section>
-                <h2>4. Reclamación o Queja</h2>
+                <h2 th:text="#{reclamacion.seccion.tipoReclamo}">4. Reclamación o Queja</h2>
                 <div class="radio-group">
-                    <label><input type="radio" name="tipoReclamo" value="reclamo" required /> Reclamo</label>
-                    <label><input type="radio" name="tipoReclamo" value="queja" /> Queja</label>
+                    <label><input type="radio" name="tipoReclamo" value="reclamo" required /> <span th:text="#{reclamacion.reclamo}">Reclamo</span></label>
+                    <label><input type="radio" name="tipoReclamo" value="queja" /> <span th:text="#{reclamacion.queja}">Queja</span></label>
                 </div>
-                <textarea name="detalleReclamo" placeholder="Detalle del reclamo o queja" required></textarea>
+                <textarea name="detalleReclamo" th:placeholder="#{reclamacion.detalleReclamo}" required></textarea>
             </section>
 
             <!-- Sección 5 -->
             <section>
-                <h2>5. Observaciones del proveedor</h2>
+                <h2 th:text="#{reclamacion.seccion.observaciones}">5. Observaciones del proveedor</h2>
                 <input type="date" name="fechaObservacion" />
-                <textarea name="observaciones" placeholder="Detalle de las acciones tomadas"></textarea>
+                <textarea name="observaciones" th:placeholder="#{reclamacion.observaciones}">Detalle de las acciones tomadas</textarea>
             </section>
 
             <!-- Consentimiento -->
             <div class="consent">
                 <label>
-                    <input type="checkbox" name="consentimiento" required /> Entiendo y estoy de acuerdo con el uso de mis datos personales
+                    <input type="checkbox" name="consentimiento" required /> <span th:text="#{reclamacion.consentimiento}">Entiendo y estoy de acuerdo con el uso de mis datos personales</span>
                 </label>
             </div>
 
             <!-- Botón -->
             <div class="btn-container">
-                <button type="submit">GUARDAR</button>
+                <button type="submit" th:text="#{boton.guardar}">GUARDAR</button>
             </div>
         </form>
 
         <footer>
-            <p>* La formulación del reclamo no impide acudir a otras vías de solución...</p>
+            <p th:text="#{reclamacion.aviso}">* La formulación del reclamo no impide acudir a otras vías de solución...</p>
         </footer>
     </div>
-    
+
     <!-- Incluir fragmento footer -->
     <footer th:replace="fragments/footer :: footer"></footer>
-    
+
     <!-- Incluir fragmento scripts -->
-    <th:block th:replace="fragments/head :: scripts"></th:block>
-    <!-- Script específico para esta página -->
-    <script th:src="@{/js/reclamaciones.js}"></script>
+<th:block th:replace="fragments/head :: scripts"></th:block>
+<!-- Script específico para esta página -->
+<script th:src="@{/js/reclamaciones.js}"></script>
 </body>
 </html>
+
+
+
