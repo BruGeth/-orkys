@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
-<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Pollón - Carta de Platos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="cartas.css">
+    <!-- Incluir fragmento head con título "Carta" -->
+    <th:block th:replace="fragments/head :: head(title='Carta')"></th:block>
+    <!-- CSS específico para esta página -->
+    <link rel="stylesheet" th:href="@{/css/carta.css}">
 </head>
 <body>
+    <!-- Incluir fragmento navbar -->
+    <nav th:replace="fragments/navbar :: navbar"></nav>
    
     <section class="hero">
         <h1>NUESTRA CARTA</h1>
@@ -37,7 +36,7 @@
             <!-- Plato 1 - Pollo -->
             <div class="card-item" data-rarity="pollo">
                 <div class="card-image">
-                    <img src="static.img/PolloEntero.jpg" alt="Pollo a la Brasa Entero">
+                    <img th:src="@{/img/PolloEntero.jpg}" alt="Pollo a la Brasa Entero">
                 </div>
                 <div class="card-info">
                     <div class="card-name">Pollo a la Brasa Entero</div>
@@ -53,7 +52,7 @@
             <!-- Plato 2 - Pollo -->
             <div class="card-item" data-rarity="pollo">
                 <div class="card-image">
-                    <img src="static.img/MedioPollo.png" alt="1/2 Pollo a la Brasa">
+                    <img th:src="@{/img/MedioPollo.png}" alt="1/2 Pollo a la Brasa">
                 </div>
                 <div class="card-info">
                     <div class="card-name">1/2 Pollo a la Brasa</div>
@@ -69,7 +68,7 @@
             <!-- Plato 3 - Parrilla -->
             <div class="card-item" data-rarity="parrilla">
                 <div class="card-image">
-                    <img src="static.img/Anticuchos.jpg" alt="Anticuchos">
+                    <img th:src="@{/img/Anticuchos.jpg}" alt="Anticuchos">
                     <div class="rarity-tag rara">FAVORITO</div>
                 </div>
                 <div class="card-info">
@@ -86,7 +85,7 @@
             <!-- Plato 4 - Parrilla -->
             <div class="card-item" data-rarity="parrilla">
                 <div class="card-image">
-                    <img src="static.img/ParrilladaFamiliar.jpeg" alt="Parrillada Familiar">
+                    <img th:src="@{/img/ParrilladaFamiliar.jpeg}" alt="Parrillada Familiar">
                 </div>
                 <div class="card-info">
                     <div class="card-name">Parrillada Familiar</div>
@@ -102,7 +101,7 @@
             <!-- Plato 5 - Combo -->
             <div class="card-item" data-rarity="combo">
                 <div class="card-image">
-                    <img src="static.img/ComboFamiliar.jpg" alt="Combo Familiar">
+                    <img th:src="@{/img/ComboFamiliar.jpg}" alt="Combo Familiar">
                     <div class="rarity-tag legendaria">ESPECIAL</div>
                 </div>
                 <div class="card-info">
@@ -119,7 +118,7 @@
             <!-- Plato 6 - Combo -->
             <div class="card-item" data-rarity="combo">
                 <div class="card-image">
-                    <img src="static.img/ComboDos.jpeg" alt="Combo para Dos">
+                    <img th:src="@{/img/ComboDos.jpeg}" alt="Combo para Dos">
                     <div class="rarity-tag legendaria">ESPECIAL</div>
                 </div>
                 <div class="card-info">
@@ -135,92 +134,13 @@
         </div>
     </div>
 
-    <script>
-        // Script para la funcionalidad de filtros
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const cardItems = document.querySelectorAll('.card-item');
-            
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Cambiar clase activa
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const filter = this.textContent.toLowerCase();
-                    
-                    cardItems.forEach(card => {
-                        const category = card.getAttribute('data-rarity');
-                        
-                        if (filter === 'todos') {
-                            card.style.display = 'block';
-                        } else if (filter === 'pollos' && category === 'pollo') {
-                            card.style.display = 'block';
-                        } else if (filter === 'parrillas' && category === 'parrilla') {
-                            card.style.display = 'block';
-                        } else if (filter === 'combos' && category === 'combo') {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            });
-            
-            // Funcionalidad de búsqueda
-            const searchInput = document.querySelector('.search-bar input');
-            const searchButton = document.querySelector('.search-bar button');
-            
-            function performSearch() {
-                const searchTerm = searchInput.value.toLowerCase();
-                
-                cardItems.forEach(card => {
-                    const name = card.querySelector('.card-name').textContent.toLowerCase();
-                    const type = card.querySelector('.card-type').textContent.toLowerCase();
-                    const category = card.getAttribute('data-rarity').toLowerCase();
-                    
-                    if (name.includes(searchTerm) || type.includes(searchTerm) || category.includes(searchTerm)) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            }
-            
-            searchButton.addEventListener('click', performSearch);
-            searchInput.addEventListener('keyup', function(event) {
-                if (event.key === 'Enter') {
-                    performSearch();
-                }
-            });
-            
-            // Animación para las tarjetas al hacer scroll
-            const animateOnScroll = () => {
-                const cards = document.querySelectorAll('.card-item');
-                
-                cards.forEach((card) => {
-                    const cardPosition = card.getBoundingClientRect().top;
-                    const screenPosition = window.innerHeight / 1.3;
-                    
-                    if (cardPosition < screenPosition) {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }
-                });
-            };
-            
-            // Inicializar tarjetas con opacidad 0
-            document.querySelectorAll('.card-item').forEach((card) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            });
-            
-            // Ejecutar animación en scroll
-            window.addEventListener('scroll', animateOnScroll);
-            // Ejecutar una vez al cargar para elementos visibles
-            animateOnScroll();
-        });
-    </script>
+    <!-- Incluir fragmento footer -->
+    <footer th:replace="fragments/footer :: footer"></footer>
+    
+    <!-- Incluir fragmento scripts -->
+    <th:block th:replace="fragments/head :: scripts"></th:block>
+    
+    <!-- Script específico para esta página -->
+    <script th:src="@{/js/carta.js}"></script>
 </body>
 </html>
