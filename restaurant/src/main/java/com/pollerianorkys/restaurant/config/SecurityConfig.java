@@ -30,7 +30,7 @@ public class SecurityConfig {
                 // Recursos estáticos permitidos para todos
                 .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
                 // Páginas públicas
-                .requestMatchers("/", "/home", "/auth/login", "/auth/register", "/complaints/book").permitAll()
+                .requestMatchers("/", "/home", "/auth/login", "/auth/register", "/complaints/book", "/carta", "/locales").permitAll()
                 // Páginas que requieren autenticación
                 .anyRequest().authenticated()
             )
