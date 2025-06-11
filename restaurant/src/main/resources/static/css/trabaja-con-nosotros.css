@@ -1,0 +1,69 @@
+/* Estilos específicos para la página Trabaja con Nosotros */
+.form-container {
+  max-width: 800px;
+  margin: 3rem auto;
+}
+
+.card {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 2.5rem;
+}
+
+.form-title {
+  color: #198754;
+  font-weight: bold;
+  font-family: "Segoe UI", sans-serif;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.form-subtitle {
+  color: #6c757d;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+  border-color: #198754;
+  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+}
+
+.form-select {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ced4da;
+}
+
+.form-select:focus {
+  border-color: #198754;
+  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+}
+
+.btn-success {
+  background-color: #198754;
+  border-color: #198754;
+  padding: 0.75rem 2.5rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+}
+
+.btn-success:hover {
+  background-color: #157347;
+  border-color: #146c43;
+}

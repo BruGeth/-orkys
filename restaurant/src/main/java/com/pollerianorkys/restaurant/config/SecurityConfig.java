@@ -28,11 +28,14 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(authorize -> authorize
                 // Recursos estáticos permitidos para todos
-                .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                // Páginas públicas
-                .requestMatchers("/", "/home", "/auth/login", "/auth/register", "/complaints/book", "/carta", "/locales").permitAll()
-                // Páginas que requieren autenticación
-                .anyRequest().authenticated()
+                    .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
+                    // Páginas públicas
+                    .requestMatchers("/", "/home", "/auth/login", "/auth/register",
+                            "/complaints/book", "/libro-reclamaciones", "/carta", "/menu/carta", "/promociones",
+                            "/locales", "/locations", "/promotions", "/nosotros", "/trabaja-con-nosotros",
+                            "/terminos-promociones", "/about/**").permitAll()
+                    // Páginas que requieren autenticación
+                    .anyRequest().authenticated()
             )
             .formLogin(form -> form
                 .loginPage("/auth/login")
@@ -49,7 +52,7 @@ public class SecurityConfig {
                 .permitAll()
             )
             .rememberMe(remember -> remember
-                .key("uniqueAndSecretKey")
+                .key("Contraseña")
                 .tokenValiditySeconds(86400) // 1 día
             );
 

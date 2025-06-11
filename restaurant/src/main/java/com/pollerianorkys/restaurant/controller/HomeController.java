@@ -29,7 +29,7 @@ public class HomeController {
         }
         return "home";
     }
-    
+
     /**
      * Muestra la página de carta
      */
@@ -37,20 +37,44 @@ public class HomeController {
     public String showMenuPage() {
         return "carta";
     }
-    
+
     /**
      * Muestra la página de promociones
      */
     @GetMapping("/promociones")
     public String showPromotionsPage() {
-        return "promociones";
+        return "redirect:/promotions";
     }
-    
+
     /**
      * Muestra la página de locales
      */
     @GetMapping("/locales")
     public String showLocationsPage() {
         return "locales";
+    }
+
+    /**
+     * Muestra la página de nosotros
+     */
+    @GetMapping("/nosotros")
+    public String showAboutUsPage() {
+        return "redirect:/about/us";
+    }
+
+    /**
+     * Muestra la página de trabaja con nosotros
+     */
+    @GetMapping("/trabaja-con-nosotros")
+    public String showWorkWithUsPage() {
+        return "redirect:/about/work-with-us";
+    }
+
+    /**
+     * Muestra la página de términos y condiciones de promociones
+     */
+    @GetMapping("/terminos")
+    public String showTermsPromotionsPage() {
+        return "redirect:/about/terms-promotions";
     }
 }
