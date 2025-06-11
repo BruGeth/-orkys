@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <!-- Incluir fragmento head con título "Términos y Condiciones de Promociones" -->
+    <th:block th:replace="fragments/head :: head(title='Términos y Condiciones de Promociones')"></th:block>
+    <!-- CSS específico para esta página -->
+    <link rel="stylesheet" th:href="@{/css/terminos-condiciones.css}">
+</head>
+<body>
+<!-- Incluir fragmento navbar -->
+<nav th:replace="fragments/navbar :: navbar"></nav>
+
+<main>
+    <!-- Sección de Términos y Promociones -->
+    <section class="py-5" id="terminos-promociones">
+        <div class="container terms-container">
+            <div class="text-center mb-5">
+                <h2 class="terms-title">
+                    <i class="bi bi-file-earmark-text"></i> Términos y Condiciones de la Promoción "¡A Disfrutar en Familia!"
+                </h2>
+                <p class="terms-subtitle">Conoce todos los detalles y requisitos para participar en nuestras promociones exclusivas de Pollería Ñorkys.</p>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <h4 class="section-heading"><i class="bi bi-check-circle-fill me-2"></i> Requisitos</h4>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Compra cualquier combo con Pollo a la Brasa para participar.</li>
+                        <li class="list-group-item">Obtén 1 participación por persona (por DNI).</li>
+                        <li class="list-group-item">Promoción válida del <strong>15 de mayo al 30 de junio de 2025</strong>.</li>
+                        <li class="list-group-item">Promoción válida en todas las sucursales de Pollería Ñorkys (excepto tiendas en el extranjero).</li>
+                    </ul>
+
+                    <h4 class="section-heading mt-4"><i class="bi bi-trophy-fill me-2"></i> Premios</h4>
+                    <p class="mb-1">Se sortearán <strong>5 paquetes familiares</strong> a destinos turísticos dentro del país:</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Incluye pasajes ida y vuelta, alojamiento de 4 noches con desayuno en destinos como Cusco, Arequipa y Máncora.</li>
+                        <li class="list-group-item">El paquete es intransferible y no modificable.</li>
+                    </ul>
+
+                    <h4 class="section-heading mt-4"><i class="bi bi-calendar-event-fill me-2"></i> Fecha del Sorteo</h4>
+                    <p class="mb-0">El <strong>5 de julio de 2025</strong> a las 4:00 p.m. vía transmisión en vivo a través de nuestras redes sociales con un notario público.</p>
+                </div>
+
+                <div class="col-lg-6">
+                    <h4 class="section-heading"><i class="bi bi-person-check-fill me-2"></i> ¿Cómo Participar?</h4>
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item">Compra tu combo con Pollo a la Brasa.</li>
+                        <li class="list-group-item">Escanea el código QR disponible en tu boleta de compra o en el local.</li>
+                        <li class="list-group-item">Ingresa el código de tu boleta en el formulario online en nuestra página web.</li>
+                        <li class="list-group-item">Completa tus datos personales correctamente en el formulario.</li>
+                        <li class="list-group-item">Acepta los Términos y Condiciones para completar tu participación.</li>
+                    </ol>
+
+                    <div class="mt-4">
+                        <img th:src="@{/img/promocion.jpg}" alt="Promoción" class="img-fluid rounded shadow promo-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Incluir fragmento footer -->
+<footer th:replace="fragments/footer :: footer"></footer>
+
+<!-- Incluir fragmento scripts -->
+<th:block th:replace="fragments/head :: scripts"></th:block>
+</body>
+</html>

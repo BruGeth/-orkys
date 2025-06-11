@@ -1,0 +1,81 @@
+/* Estilos específicos para la página Nosotros */
+.hero-section {
+  background-color: #198754;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.hero-section h1 {
+  color: white;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-family: "Segoe UI", sans-serif;
+  margin-bottom: 0.75rem;
+}
+
+.hero-section p {
+  color: #f8f9fa;
+  font-weight: 500;
+}
+
+.section-container {
+  padding: 3rem 1rem;
+  margin: 2rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.section-container.bg-light {
+  background-color: #f8f9fa;
+}
+
+.section-container img {
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.section-title {
+  color: #198754;
+  font-weight: bold;
+  font-family: "Segoe UI", sans-serif;
+  margin-bottom: 1.5rem;
+}
+
+.feature-list {
+  margin-top: 1.5rem;
+}
+
+.feature-list li {
+  margin-bottom: 0.5rem;
+}
+
+.btn-success {
+  background-color: #198754;
+  border-color: #198754;
+}
+
+.btn-success:hover {
+  background-color: #157347;
+  border-color: #146c43;
+}
+
+.map-container {
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 450px;
+  border: 0;
+}
+
+/* Estilos para el modal */
+.modal-header.bg-success {
+  background-color: #198754;
+}
+
+.list-group-item {
+  font-size: 1.1rem;
+  padding: 0.75rem 1.25rem;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <!-- Incluir fragmento head con título "Trabaja con Nosotros" -->
+    <th:block th:replace="fragments/head :: head(title='Trabaja con Nosotros')"></th:block>
+    <!-- CSS específico para esta página -->
+    <link rel="stylesheet" th:href="@{/css/trabaja-con-nosotros.css}">
+</head>
+<body>
+<!-- Incluir fragmento navbar -->
+<nav th:replace="fragments/navbar :: navbar"></nav>
+
+<!-- Contenido - formulario -->
+<main>
+    <!-- Formulario -->
+    <section class="py-5" id="formulario-trabajo">
+        <div class="container form-container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="card shadow-lg rounded-4 border-0">
+                        <div class="card-body p-5">
+                            <h2 class="form-title">
+                                Trabaja con nosotros
+                            </h2>
+                            <p class="form-subtitle">
+                                Completa tus datos para ser parte de nuestro equipo.
+                            </p>
+                            <form th:action="@{/about/work-with-us/submit}" method="post">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="nombre" class="form-label">Nombre</label>
+                                        <input type="text" class="form-control" id="nombre" name="nombre"
+                                               pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{2,50}" required
+                                               title="Solo letras y mínimo 2 caracteres"
+                                               placeholder="Franco">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="apellido" class="form-label">Apellido</label>
+                                        <input type="text" class="form-control" id="apellido" name="apellido"
+                                               pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{2,50}" required
+                                               title="Solo letras y mínimo 2 caracteres"
+                                               placeholder="Leandro Paz">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="correo" class="form-label">Correo electrónico</label>
+                                        <input type="email" class="form-control" id="correo" name="correo" required
+                                               placeholder="Axel@email.com">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="telefono" class="form-label">Teléfono</label>
+                                        <input type="tel" class="form-control" id="telefono" name="telefono"
+                                               pattern="[0-9]{9}" maxlength="9" required
+                                               title="Debe tener exactamente 9 dígitos"
+                                               placeholder="987654321">
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="direccion" class="form-label">Dirección</label>
+                                        <input type="text" class="form-control" id="direccion" name="direccion"
+                                               required placeholder=" Av. Principal 123 - Lima">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="distrito" class="form-label">Distrito de Lima donde desea trabajar</label>
+                                        <select class="form-select" id="distrito" name="distrito" required>
+                                            <option value="" disabled selected>Seleccione un distrito</option>
+                                            <option>Miraflores</option>
+                                            <option>San Borja</option>
+                                            <option>Los Olivos</option>
+                                            <option>La Molina</option>
+                                            <option>Santiago de Surco</option>
+                                            <option>San Miguel</option>
+                                            <option>Pueblo Libre</option>
+                                            <option>Magdalena del Mar</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="cargo" class="form-label">Cargo que busca</label>
+                                        <select class="form-select" id="cargo" name="cargo" required>
+                                            <option value="" disabled selected>Seleccione un cargo</option>
+                                            <option>Atención al cliente</option>
+                                            <option>Cocinero/a</option>
+                                            <option>Repartidor/a</option>
+                                            <option>Administrador/a</option>
+                                            <option>Logística</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-success btn-lg px-5">Enviar Postulación</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Incluir fragmento footer -->
+<footer th:replace="fragments/footer :: footer"></footer>
+
+<!-- Incluir fragmento scripts -->
+<th:block th:replace="fragments/head :: scripts"></th:block>
+</body>
+</html>

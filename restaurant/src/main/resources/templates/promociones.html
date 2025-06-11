@@ -1,493 +1,196 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Promociones Ñorkys</title>
-    <link rel="icon" href="/img/logo-ñorkys-small.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/restaurant/src/main/resources/static/css/promociones.css"> 
+    <!-- Incluir fragmento head con título "Promociones" -->
+    <th:block th:replace="fragments/head :: head(title='Promociones')"></th:block>
+    <!-- CSS específico para esta página -->
+    <link rel="stylesheet" th:href="@{/css/promociones.css}">
 </head>
 <body>
-    <!----- NAV SECTION ------>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a href="/restaurant/src/main/resources/templates/home.html"><img class="logo" src="/restaurant/src/main/resources/static/img/logo.png "></a>
+<!-- Incluir fragmento navbar -->
+<nav th:replace="fragments/navbar :: navbar"></nav>
 
-            <!-- LOGIN BUTTON -->
-            <div class="d-lg-none d-flex align-items-center ms-auto gap-2">
-                <button class="navbar-toggler btn-login-toggler" type="button" onclick="location.href='login.html'">
-                    <span class="login-toggler-icon d-flex justify-content-center align-items-center">
-                        <i class="fas fa-user"></i>
-                    </span>
-                </button>
-            
-                <!-- NAV BUTTON -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-            
-            
-            <!-- MENU FOR PC -->
-            
-            <ul class="navbar-nav d-none d-lg-flex ms-auto menu-pc">
-                <li class="nav-item px-3"><a href="#" class="nav-link">CARTA</a></li>
-                <li class="nav-item px-3"><a href="promociones/promociones.html" class="nav-link">PROMOCIONES</a></li>
-                <li class="nav-item px-3"><a href="#" class="nav-link">LOCALES</a></li>
-                <li class="nav-item px-3">
-                    <a href="login/login.html" class="nav-link link--login">
-                        INICIAR SESIÓN
-                        <i class="bi bi-person fs-5 icon-login"></i>
-                    </a>
-                </li>
-            </ul>
-
-            <!-- OFF CANVAS MAIN CONTAINER -->
-            <section class="offcanvas offcanvas-start" id="menuLateral" tabindex="-1">
-                <div class="offcanvas-header">
-                        <h5 class="offcanvas-title">MENÚ</h5>
-                    <button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="offcanvas"></button>
-                </div>
-                <!-- OFF CANVAS MENU LINKS START -->
-                <div class="offcanvas-body d-flex flex-column justify-content-between px-0">
-                    <ul class="navbar-nav justify-content-evenly">
-                        <li class="nav-item p-3"><a href="#" class="nav-link">CARTA</a></li>
-                        <li class="nav-item p-3"><a href="#" class="nav-link">PROMOCIONES</a></li>
-                        <li class="nav-item p-3"><a href="#" class="nav-link">LOCALES</a></li>
-                    </ul>
-                    <!-- SOCIAL MEDIA LINKS -->
-
-                    <div class="d-lg-none align-self-center py-3">
-                        <a href="#"><i class="bi bi-facebook px-2 fs-2"></i>
-                        </a>
-                        <a href="#"><i class="bi bi-instagram px-2 fs-2"></i>
-                        </a>
-                        <a href="#"><i class="bi bi-whatsapp px-2 fs-2"></i>
-                        </a>
-                    </div>
-                </div>
-            </section>
-            <!-- OFFCANVAS MAIN CONTAINER END -->
-        </div>
-    </nav>
-    <!---- END NAV SECTION ----->
-    <div class="section-search-bar">
-        <div class="bar-container">
-            <div class="search-bar">
-                <input class="input-search" type="text" placeholder="Buscar productos">
-                <button class="btn-search" type="submit"><i class="bi bi-search search-icon"></i>
-                </button>
-            </div>
+<div class="section-search-bar">
+    <div class="bar-container">
+        <div class="search-bar">
+            <input class="input-search" type="text" placeholder="Buscar productos">
+            <button class="btn-search" type="submit"><i class="bi bi-search search-icon"></i>
+            </button>
         </div>
     </div>
-    <div class="grid-container">
-        <div class="grid-item">
-            <div class="figure-item">
-                <img src="https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg" class="img-prom">
-            </div>
-            <div class="container-prom">
-                <div class="product-container">
-                    <h4 class="title-prom">PROMO EJE MAMÁ</h4>
-                    <div class="info-product">
-                        <p class="info-prom">
-                            1 pollo a la brasa + ensalada clásica familiar + 1 porción de torta + arroz oriental + 6 tequeños + gaseosa 1.5 Lt
-                        </p>
-                        <p class="price-prom">
-                            S/99.90
-                        </p>
-                    </div>
-                </div>
-                <div class="buy-container">
-                    <div>
-                        <button class="button-prom">COMPRAR</button>
-                    </div>
-                    <div>
-                        <a href="#" class="terms-prom">Términos y Condiciones</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid-item">
-            <div class="figure-item">
-                <img src="https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg" class="img-prom">
-            </div>
-            <div class="container-prom">
-                <div class="product-container">
-                    <h4 class="title-prom">BANQUETE BROASTER</h4>
-                    <div class="info-product">
-                        <p class="info-prom">
-                            6 PIEZAS BROASTER + PAPAS FRITAS MEDIANAS + ARROZ ORIENTAL FAMILIAR + GASEOSA DE 1.5L
-                        </p>
-                        <p class="price-prom">
-                            S/54.90
-                        </p>
-                    </div>
-                </div>
-                <div class="buy-container">
-                    <div>
-                        <button class="button-prom">COMPRAR</button>
-                    </div>
-                    <div>
-                        <a href="#" class="terms-prom">Términos y Condiciones</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid-item">
-            <div class="figure-item">
-                <img src="https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg" class="img-prom">
-            </div>
-            <div class="container-prom">
-                <div class="product-container">
-                    <h4 class="title-prom">ROKY'S BURGUER CLÁSICA</h4>
-                    <div class="info-product">
-                        <p class="info-prom">
-                            1 rokys burguer + papas onduladas
-                        </p>
-                        <p class="price-prom">
-                            S/14.90
-                        </p>
-                    </div>
-                </div>
-                <div class="buy-container">
-                    <div>
-                        <button class="button-prom">COMPRAR</button>
-                    </div>
-                    <div>
-                        <a href="#" class="terms-prom">Términos y Condiciones</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid-item">
-            <div class="figure-item">
-                <img src="https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg" class="img-prom">
-            </div>
-            <div class="container-prom">
-                <div class="product-container">
-                    <h4 class="title-prom">MEGAROKYTO</h4>
-                    <div class="info-product">
-                        <p class="info-prom">
-                            1 pollo + 1/4 de pollo + papas + ensalada +1 gaseosa de 1.5L
-                        </p>
-                        <p class="price-prom">
-                            S/80.90
-                        </p>
-                    </div>
-                </div>
-                <div class="buy-container">
-                    <div>
-                        <button class="button-prom">COMPRAR</button>
-                    </div>
-                    <div>
-                        <a href="#" class="terms-prom">Términos y Condiciones</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid-item"><div class="figure-item">
-                <img src="https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg" class="img-prom">
-            </div>
-            <div class="container-prom">
-                <div class="product-container">
-                    <h4 class="title-prom">PROMO PERSONAL</h4>
-                    <div class="info-product">
-                        <p class="info-prom">
-                            1/4 DE POLLO + PAPAS PERSONALES + ENSALADA PERSONAL + GASEOSA
-                        </p>
-                        <p class="price-prom">
-                            S/23.90
-                        </p>
-                    </div>
-                </div>
-                <div class="buy-container">
-                    <div>
-                        <button class="button-prom">COMPRAR</button>
-                    </div>
-                    <div>
-                        <a href="#" class="terms-prom">Términos y Condiciones</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid-item">
-            <div class="figure-item">
-                <img src="https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg" class="img-prom">
-            </div>
-            <div class="container-prom">
-                <div class="product-container">
-                    <h4 class="title-prom">PROMO 1/4 BRASA + GASEOSA</h4>
-                    <div class="info-product">
-                        <p class="info-prom">
-                            1/4 POLLO A LA BRASA + GASEOSA PERSONAL
-                        </p>
-                        <p class="price-prom">
-                            S/17.90
-                        </p>
-                    </div>
-                </div>
-                <div class="buy-container">
-                    <div>
-                        <button class="button-prom">COMPRAR</button>
-                    </div>
-                    <div>
-                        <a href="#" class="terms-prom">Términos y Condiciones</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid-item">
-            <div class="figure-item">
-                <img src="https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg" class="img-prom">
-            </div>
-            <div class="container-prom">
-                <div class="product-container">
-                    <h4 class="title-prom">PROMO MOSTRITO</h4>
-                    <div class="info-product">
-                        <p class="info-prom">
-                            1/4 POLLO A LA BRASA + PAPAS + ARROZ ORIENTAL
-                        </p>
-                        <p class="price-prom">
-                            S/16.90
-                        </p>
-                    </div>
-                </div>
-                <div class="buy-container">
-                    <div>
-                        <button class="button-prom">COMPRAR</button>
-                    </div>
-                    <div>
-                        <a href="#" class="terms-prom">Términos y Condiciones</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid-item">
-            <div class="figure-item">
-                <img src="https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg" class="img-prom">
-            </div>
-            <div class="container-prom">
-                <div class="product-container">
-                    <h4 class="title-prom">PROMO MOSTRITO BRASA + GASEOSA</h4>
-                    <div class="info-product">
-                        <p class="info-prom">
-                            1/4 POLLO A LA BRASA + PAPAS + ARROZ ORIENTAL + GASEOSA
-                        </p>
-                        <p class="price-prom">
-                            S/18.90
-                        </p>
-                    </div>
-                </div>
-                <div class="buy-container">
-                    <div>
-                        <button class="button-prom">COMPRAR</button>
-                    </div>
-                    <div>
-                        <a href="#" class="terms-prom">Términos y Condiciones</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid-item">
-            <div class="figure-item">
-                <img src="https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg" class="img-prom">
-            </div>
-            <div class="container-prom">
-                <div class="product-container">
-                    <h4 class="title-prom">OFERTA 1</h4>
-                    <div class="info-product">
-                        <p class="info-prom">
-                            1 pollo + papas + ensalada + 1 gaseosa de 1.5L
-                        </p>
-                        <p class="price-prom">
-                            S/78.90
-                        </p>
-                    </div>
-                </div>
-                <div class="buy-container">
-                    <div>
-                        <button class="button-prom">COMPRAR</button>
-                    </div>
-                    <div>
-                        <a href="#" class="terms-prom">Términos y Condiciones</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid-item">
-            <div class="figure-item">
-                <img src="https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg" class="img-prom">
-            </div>
-            <div class="container-prom">
-                <div class="product-container">
-                    <h4 class="title-prom">PROMO 1/4 BRASA</h4>
-                    <div class="info-product">
-                        <p class="info-prom">
-                            1/4 pollo a la brasa
-                        </p>
-                        <p class="price-prom">
-                            S/15.90
-                        </p>
-                    </div>
-                </div>
-                <div class="buy-container">
-                    <div>
-                        <button class="button-prom">COMPRAR</button>
-                    </div>
-                    <div>
-                        <a href="#" class="terms-prom">Términos y Condiciones</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid-item">
-            <div class="figure-item">
-                <img src="https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg" class="img-prom">
-            </div>
-            <div class="container-prom">
-                <div class="product-container">
-                    <h4 class="title-prom">PROMO PARA COMPARTIR</h4>
-                    <div class="info-product">
-                        <p class="info-prom">
-                            1/2 pollo + papas + ensalada + 2 gaseosas personales
-                        </p>
-                        <p class="price-prom">
-                            S/37.90
-                        </p>
-                    </div>
-                </div>
-                <div class="buy-container">
-                    <div>
-                        <button class="button-prom">COMPRAR</button>
-                    </div>
-                    <div>
-                        <a href="#" class="terms-prom">Términos y Condiciones</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid-item">
-            <div class="figure-item">
-                <img src="https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg" class="img-prom">
-            </div>
-            <div class="container-prom">
-                <div class="product-container">
-                    <h4 class="title-prom">COMBO MOSTRIQUEÑO PERSONAL</h4>
-                    <div class="info-product">
-                        <p class="info-prom">
-                            1 mostrito + 3 tequeños + 1 gaseosa personal
-                        </p>
-                        <p class="price-prom">
-                            S/29.90
-                        </p>
-                    </div>
-                </div>
-                <div class="buy-container">
-                    <div>
-                        <button class="button-prom">COMPRAR</button>
-                    </div>
-                    <div>
-                        <a href="#" class="terms-prom">Términos y Condiciones</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 
-
-    <!------------- --FOOTER SECTION --------------->
-    <footer class="footer pt-5 pb-1">
-        <div class="container-footer">
-            <div class="row text-center text-md-start">
-                <!-- DEFINIENDO LA COLUMNA EN DIFERENTES DISPOSITIVOS -->
-                <div class="footer-column col-lg-4 col-xl-2">
-                    <h5 class="footer-title text-uppercase">Nosotros</h5>
-                    <ul class="footer-list ps-0">
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">¿Quienes Somos?</a>
-                        </li>
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">Trabaja con nosotros</a>
-                        </li>
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">Locales</a>
-                        </li>
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">Terminos y Condiciones de promociones</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="footer-column col-md-2 col-lg-3 col-xl-2">
-                    <h5 class="footer-title text-uppercase font-weight">Legal</h5>
-                    <ul class="footer-list ps-0">
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">Términos y condiciones</a>
-                        </li>
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">Políticas de privacidad</a>
-                        </li>
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">Legales</a>
-                        </li>
-                        <li class="footer-item">
-                            <a href="#" class="footer-link">Razones sociales y RUC</a>
-                        </li>
-                        <li class="footer-item">
-                            <a href="/restaurant/src/main/resources/templates/complaintsBook.html" class="footer-link">LIBRO DE RECLAMACIONES</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="footer-column col-md-2 col-lg-3 col-xl-2">
-                    <h5 class="footer-title text-uppercase font-weight">Contáctanos</h5>
-                    <ul class="footer-list contact-list ps-0">
-                        <li class="footer-item mb-2">
-                            <i class="fas fa-home me-2"></i> Lima, Perú
-                        </li>
-                        <li class="footer-item mb-2">
-                            <i class="fas fa-envelope me-2"></i> ñorkys@gmail.com
-                        </li>
-                        <li class="footer-item">
-                            <i class="fas fa-phone me-2"></i> +999 888 777
-                        </li>
-                    </ul>
-                </div>
-                <hr class="mb-4">
-                <div class="text-center mb-2">
-                    <p>
-                        Copyright Todos los derechos reservados
-                        <a href="#" class="footer-link">
-                            <strong>Ñorkys</strong>
-                        </a>
+<div class="grid-container">
+    <div class="grid-item">
+        <div class="figure-item">
+            <img th:src="@{https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg}" class="img-prom" alt="Promoción">
+        </div>
+        <div class="container-prom">
+            <div class="product-container">
+                <h4 class="title-prom">PROMO EJE MAMÁ</h4>
+                <div class="info-product">
+                    <p class="info-prom">
+                        1 pollo a la brasa + ensalada clásica familiar + 1 porción de torta + arroz oriental + 6 tequeños + gaseosa 1.5 Lt
+                    </p>
+                    <p class="price-prom">
+                        S/99.90
                     </p>
                 </div>
-                <div class="icons-container text-center">
-                    <ul class="list-unstyled list-inline">
-                        <li class="list-inline-item">
-                            <a href="#" class="footer-link footer-icon-social icon-fb">
-                                <i class="fab fa-facebook"></i>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#" class="footer-link footer-icon-social icon-ig">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#" class="footer-link footer-icon-social icon-ws">
-                                <i class="fab fa-whatsapp"></i>
-                            </a>
-                        </li>
-                    </ul>
+            </div>
+            <div class="buy-container">
+                <div>
+                    <button class="button-prom">COMPRAR</button>
+                </div>
+                <div>
+                    <a th:href="@{/about/terms-promotions}" class="terms-prom">Términos y Condiciones</a>
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
 
-    <script src="main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <div class="grid-item">
+        <div class="figure-item">
+            <img th:src="@{https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg}" class="img-prom" alt="Promoción">
+        </div>
+        <div class="container-prom">
+            <div class="product-container">
+                <h4 class="title-prom">BANQUETE BROASTER</h4>
+                <div class="info-product">
+                    <p class="info-prom">
+                        6 PIEZAS BROASTER + PAPAS FRITAS MEDIANAS + ARROZ ORIENTAL FAMILIAR + GASEOSA DE 1.5L
+                    </p>
+                    <p class="price-prom">
+                        S/54.90
+                    </p>
+                </div>
+            </div>
+            <div class="buy-container">
+                <div>
+                    <button class="button-prom">COMPRAR</button>
+                </div>
+                <div>
+                    <a th:href="@{/about/terms-promotions}" class="terms-prom">Términos y Condiciones</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-item">
+        <div class="figure-item">
+            <img th:src="@{https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg}" class="img-prom" alt="Promoción">
+        </div>
+        <div class="container-prom">
+            <div class="product-container">
+                <h4 class="title-prom">ROKY'S BURGUER CLÁSICA</h4>
+                <div class="info-product">
+                    <p class="info-prom">
+                        1 rokys burguer + papas onduladas
+                    </p>
+                    <p class="price-prom">
+                        S/14.90
+                    </p>
+                </div>
+            </div>
+            <div class="buy-container">
+                <div>
+                    <button class="button-prom">COMPRAR</button>
+                </div>
+                <div>
+                    <a th:href="@{/about/terms-promotions}" class="terms-prom">Términos y Condiciones</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-item">
+        <div class="figure-item">
+            <img th:src="@{https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg}" class="img-prom" alt="Promoción">
+        </div>
+        <div class="container-prom">
+            <div class="product-container">
+                <h4 class="title-prom">MEGAROKYTO</h4>
+                <div class="info-product">
+                    <p class="info-prom">
+                        1 pollo + 1/4 de pollo + papas + ensalada +1 gaseosa de 1.5L
+                    </p>
+                    <p class="price-prom">
+                        S/80.90
+                    </p>
+                </div>
+            </div>
+            <div class="buy-container">
+                <div>
+                    <button class="button-prom">COMPRAR</button>
+                </div>
+                <div>
+                    <a th:href="@{/about/terms-promotions}" class="terms-prom">Términos y Condiciones</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-item">
+        <div class="figure-item">
+            <img th:src="@{https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg}" class="img-prom" alt="Promoción">
+        </div>
+        <div class="container-prom">
+            <div class="product-container">
+                <h4 class="title-prom">PROMO PERSONAL</h4>
+                <div class="info-product">
+                    <p class="info-prom">
+                        1/4 DE POLLO + PAPAS PERSONALES + ENSALADA PERSONAL + GASEOSA
+                    </p>
+                    <p class="price-prom">
+                        S/23.90
+                    </p>
+                </div>
+            </div>
+            <div class="buy-container">
+                <div>
+                    <button class="button-prom">COMPRAR</button>
+                </div>
+                <div>
+                    <a th:href="@{/about/terms-promotions}" class="terms-prom">Términos y Condiciones</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-item">
+        <div class="figure-item">
+            <img th:src="@{https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg}" class="img-prom" alt="Promoción">
+        </div>
+        <div class="container-prom">
+            <div class="product-container">
+                <h4 class="title-prom">PROMO 1/4 BRASA + GASEOSA</h4>
+                <div class="info-product">
+                    <p class="info-prom">
+                        1/4 POLLO A LA BRASA + GASEOSA PERSONAL
+                    </p>
+                    <p class="price-prom">
+                        S/17.90
+                    </p>
+                </div>
+            </div>
+            <div class="buy-container">
+                <div>
+                    <button class="button-prom">COMPRAR</button>
+                </div>
+                <div>
+                    <a th:href="@{https://s3-rokys-pro.s3.amazonaws.com/media/catalog/product/s/k/sku_promo_eje___mama_8635deKvPI3X_main_1.jpg}" class="terms-prom">Términos y Condiciones</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Incluir fragmento footer -->
+<footer th:replace="fragments/footer :: footer"></footer>
+
+<!-- Incluir fragmento scripts -->
+<th:block th:replace="fragments/head :: scripts"></th:block>
+
+<!-- Script específico para esta página -->
+<script th:src="@{/js/promociones.js}"></script>
 </body>
 </html>
