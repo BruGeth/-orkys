@@ -1,134 +1,87 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
-    <head>
-        <!-- Incluir fragmento head con título "Libro de Reclamaciones" -->
-    <th:block th:replace="fragments/head :: head(title=#{titulo.reclamaciones})"></th:block>
-    <!-- CSS específico para esta página -->
+<head>
+    <th:block th:replace="fragments/head :: head(title='Libro de Reclamaciones')"></th:block>
     <link rel="stylesheet" th:href="@{/css/complaintsBook.css}">
 </head>
 <body>
-    <!-- Incluir fragmento navbar -->
     <nav th:replace="fragments/navbar :: navbar"></nav>
-
-    <!-- Selector de idioma -->
-    <div style="text-align: right; padding: 1rem;">
-        <a th:href="@{/complaints/book(lang=es)}" th:text="#{idioma.espanol}">Español</a> |
-        <a th:href="@{/complaints/book(lang=en)}" th:text="#{idioma.ingles}">Inglés</a>
-    </div>
 
     <div class="container">
         <header>
-            <h1 th:text="#{reclamacion.titulo}">HOJA DE RECLAMACIÓN [N° 000001404-2025/LDRV-01]</h1>
-            <p class="fecha"><span th:text="#{reclamacion.fecha}">Fecha de registro:</span> <span id="fecha-registro"></span></p>
+            <h1>HOJA DE RECLAMACIÓN [N° 000001404-2025/LDRV-01]</h1>
+            <p class="fecha">Fecha de registro: <span id="fecha-registro"></span></p>
         </header>
 
-        <form id="reclamacion-form" th:action="@{/libro-reclamaciones/submit}" method="post">
-            <!-- 1.ELECCIÓN DEL RESTAURANTE -->
+        <form th:action="@{/complaints/submit}" method="post">
+            <!-- 1. Restaurante -->
             <section>
-                <h2 th:text="#{reclamacion.seccion.restaurante}">1. Elección del restaurante</h2>
+                <h2>1. Elección del restaurante</h2>
                 <select name="restaurante" required>
-                    <option value="">-- <span th:text="#{reclamacion.seleccionar}">Seleccionar</span> --</option>
+                    <option value="">-- Seleccionar --</option>
                     <option value="Ñorkys San Isidro">Ñorkys San Isidro</option>
                     <option value="Ñorkys Miraflores">Ñorkys Miraflores</option>
                 </select>
-                <div class="info-local">
-                    <p><strong th:text="#{reclamacion.razonSocialLabel}">Razón Social:</strong> Ñorkys S.A.C</p>
-                    <p><strong th:text="#{reclamacion.rucLabel}">RUC:</strong> 12345678901</p>
-                    <p><strong th:text="#{reclamacion.direccionFiscalLabel}">Dirección fiscal:</strong> Av. Perú 1234, Lima</p>
-                </div>        
             </section>
 
-            <!-- 2.DATOS DEL CONSUMIDOR-->
+            <!-- 2. Datos del consumidor -->
             <section>
-                <h2 th:text="#{reclamacion.seccion.consumidor}">2. Datos del Consumidor</h2>
-                <input type="text" name="nombreCompleto" th:placeholder="#{reclamacion.nombreCompleto}" required />
-                <div class="input-row">
-                    <input type="text" name="departamento" th:placeholder="#{reclamacion.departamento}" required />
-                    <input type="text" name="direccion" th:placeholder="#{reclamacion.direccion}" required />
-                </div>
-                <div class="input-row">
-                    <input type="text" name="documento" th:placeholder="#{reclamacion.documento}" required />
-                    <input type="text" name="telefono" th:placeholder="#{reclamacion.telefono}" required />
-                </div>
-                <input type="email" name="email" th:placeholder="#{reclamacion.email}" required />
-                <input type="text" name="celular" th:placeholder="#{reclamacion.celular}" />
+                <h2>2. Datos del Consumidor</h2>
+                <input type="text" name="nombreCompleto" placeholder="Nombre completo" required />
+                <input type="text" name="departamento" placeholder="Departamento" required />
+                <input type="text" name="direccion" placeholder="Dirección" required />
+                <input type="text" name="documento" placeholder="Documento" required />
+                <input type="text" name="telefono" placeholder="Teléfono" required />
+                <input type="email" name="email" placeholder="Email" required />
+                <input type="text" name="celular" placeholder="Celular" />
             </section>
 
-            <!-- 3.PRODUCTO O SERVICIO -->
+            <!-- 3. Producto o servicio -->
             <section>
-                <h2 th:text="#{reclamacion.seccion.producto}">3. Producto o Servicio</h2>
-                <div class="radio-group">
-                    <label><input type="radio" name="tipo" value="producto" required /> <span th:text="#{reclamacion.producto}">Producto</span></label>
-                    <label><input type="radio" name="tipo" value="servicio" /> <span th:text="#{reclamacion.servicio}">Servicio</span></label>
-                </div>
-                <div class="input-row">
-                    <input type="text" name="numeroPedido" th:placeholder="#{reclamacion.numeroPedido}" />
-                    <input type="date" name="fechaPedido" />
-                </div>
-                <div class="input-row">
-                    <select name="canalPedido">
-                        <option value="">-- <span th:text="#{reclamacion.canalPedido}">Canal de pedido</span> --</option>
-                        <option value="Delivery" th:text="#{reclamacion.delivery}">Delivery</option>
-                        <option value="Presencial" th:text="#{reclamacion.presencial}">Presencial</option>
-                    </select>
-                    <input type="text" name="montoReclamado" th:placeholder="#{reclamacion.montoReclamado}" />
-                </div>
-                <textarea name="detallePedido" th:placeholder="#{reclamacion.detallePedido}" maxlength="500"></textarea>
-
-                <!-- IMAGEN -->
-                <div class="file-upload">
-                    <label for="imagen-reclamo" th:text="#{reclamacion.imagen}">Agregar imagen del reclamo (opcional):</label>
-                    <input type="file" id="imagen-reclamo" name="imagenReclamo" accept="image/*" />
-                    <div id="preview-container">
-                        <img id="preview" src="/placeholder.svg" alt="" style="display: none;" />
-                    </div>
-                </div>
+                <h2>3. Producto o Servicio</h2>
+                <label><input type="radio" name="tipo" value="producto" required /> Producto</label>
+                <label><input type="radio" name="tipo" value="servicio" /> Servicio</label>
+                <input type="text" name="numeroPedido" placeholder="Número de pedido" />
+                <input type="date" name="fechaPedido" />
+                <select name="canalPedido">
+                    <option value="">-- Canal de pedido --</option>
+                    <option value="Delivery">Delivery</option>
+                    <option value="Presencial">Presencial</option>
+                </select>
+                <input type="text" name="montoReclamado" placeholder="Monto reclamado" />
             </section>
 
-            <!-- 4.RECLAMACIÓN O QUEJA -->
+            <!-- 4. Reclamo o queja -->
             <section>
-                <h2 th:text="#{reclamacion.seccion.tipoReclamo}">4. Reclamación o Queja</h2>
-                <div class="radio-group">
-                    <label><input type="radio" name="tipoReclamo" value="reclamo" required /> <span th:text="#{reclamacion.reclamo}">Reclamo</span></label>
-                    <label><input type="radio" name="tipoReclamo" value="queja" /> <span th:text="#{reclamacion.queja}">Queja</span></label>
-                </div>
-                <textarea name="detalleReclamo" th:placeholder="#{reclamacion.detalleReclamo}" required></textarea>
+                <h2>4. Reclamación o Queja</h2>
+                <label><input type="radio" name="tipoReclamo" value="reclamo" required /> Reclamo</label>
+                <label><input type="radio" name="tipoReclamo" value="queja" /> Queja</label>
+                <textarea name="detalleReclamo" placeholder="Detalle del reclamo" required></textarea>
             </section>
 
-            <!-- Sección 5 -->
+            <!-- 5. Observaciones -->
             <section>
-                <h2 th:text="#{reclamacion.seccion.observaciones}">5. Observaciones del proveedor</h2>
+                <h2>5. Observaciones</h2>
                 <input type="date" name="fechaObservacion" />
-                <textarea name="observaciones" th:placeholder="#{reclamacion.observaciones}">Detalle de las acciones tomadas</textarea>
+                <textarea name="observaciones" placeholder="Observaciones"></textarea>
             </section>
 
             <!-- Consentimiento -->
             <div class="consent">
-                <label>
-                    <input type="checkbox" name="consentimiento" required /> <span th:text="#{reclamacion.consentimiento}">Entiendo y estoy de acuerdo con el uso de mis datos personales</span>
-                </label>
+                <label><input type="checkbox" name="consentimiento" required /> Acepto el uso de mis datos personales</label>
             </div>
 
-            <!-- Botón -->
             <div class="btn-container">
-                <button type="submit" th:text="#{boton.guardar}">GUARDAR</button>
+                <button type="submit">GUARDAR</button>
             </div>
         </form>
 
         <footer>
-            <p th:text="#{reclamacion.aviso}">* La formulación del reclamo no impide acudir a otras vías de solución...</p>
+            <p>* La formulación del reclamo no impide acudir a otras vías de solución de controversias.</p>
         </footer>
     </div>
 
-    <!-- Incluir fragmento footer -->
     <footer th:replace="fragments/footer :: footer"></footer>
-
-    <!-- Incluir fragmento scripts -->
-<th:block th:replace="fragments/head :: scripts"></th:block>
-<!-- Script específico para esta página -->
-<script th:src="@{/js/reclamaciones.js}"></script>
+    <script th:src="@{/js/reclamaciones.js}"></script>
 </body>
 </html>
-
-
-
