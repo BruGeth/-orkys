@@ -33,6 +33,13 @@ public class User {
     @NotBlank(message = "El apellido es obligatorio")
     private String lastName;
 
+    // Rol del usuario
+    @Setter
+    @Getter
+    @ManyToOne
+    @JoinColumn(name = "authority_id")
+    private Authority authority;
+
     // Correo electrónico
     @Column(nullable = false, unique = true)
     @NotBlank(message = "El correo es oblligatorio")
@@ -56,4 +63,5 @@ public class User {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
 }

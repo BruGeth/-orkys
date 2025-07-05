@@ -2,10 +2,13 @@ package com.pollerianorkys.restaurant.service.impl;
 
 import com.pollerianorkys.restaurant.dto.UserProfileDto;
 import com.pollerianorkys.restaurant.dto.UserRegistrationDto;
+import com.pollerianorkys.restaurant.model.Authority;
 import com.pollerianorkys.restaurant.model.User;
+import com.pollerianorkys.restaurant.repository.AuthorityRepository;
 import com.pollerianorkys.restaurant.repository.UserRepository;
 import com.pollerianorkys.restaurant.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +21,8 @@ public class UserServiceImpl implements UserService {
     
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthorityRepository authorityRepository;
+
     
     @Override
     @Transactional
@@ -35,7 +40,8 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("El número de teléfono ya está registrado");
         }
         
-        // Crear usuario usando el patrón Builder
+        Authority rolDefault = authorityRepository.findById(2L).get();
+
         User user = User.builder()
                 .firstName(registrationDto.getFirstName())
                 .lastName(registrationDto.getLastName())
@@ -43,6 +49,7 @@ public class UserServiceImpl implements UserService {
                 .phone(registrationDto.getPhone())
                 .username(registrationDto.getUsername())
                 .password(passwordEncoder.encode(registrationDto.getPassword()))
+                .authority(rolDefault)
                 .build();
         
         // Guardar el usuario
