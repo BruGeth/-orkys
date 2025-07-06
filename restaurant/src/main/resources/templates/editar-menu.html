@@ -1,10 +1,228 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Editar Menú</title>
+    <!-- Incluir fragmento head con título "Editar menu" -->
+    <th:block th:replace="fragments/head :: head(title='Editar menu')"></th:block>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSS específico para home -->
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+
+    <link rel="stylesheet" th:href="@{/css/editar-menu.css}">
 </head>
 <body>
-<h1>Vacio de momento ;(</h1>
+<nav th:replace="fragments/navbar :: navbar"></nav>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="alert-container">
+                <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <span th:text="${success}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <span th:text="${error}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>Gestión de Menú</h2>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addItemModal">
+                    <i class="fas fa-plus"></i> Agregar Platillo
+                </button>
+            </div>
+
+            <div class="table-container">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Imagen</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Categoría</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${menu}">
+                            <td th:text="${item.id}"></td>
+                            <td>
+                                <img th:src="${item.urlImagen}"
+                                     th:alt="${item.nombre}"
+                                     class="img-thumbnail"
+                                     onerror="this.src='https://via.placeholder.com/80x80?text=Sin+Imagen'">
+                            </td>
+                            <td>
+                                <strong th:text="${item.nombre}"></strong>
+                            </td>
+                            <td>
+                                <span th:text="${item.descripcion}"
+                                      class="text-muted"
+                                      th:title="${item.descripcion}"></span>
+                            </td>
+                            <td>
+                                <span th:text="'S/. ' + ${item.precio}" class="precio"></span>
+                            </td>
+                            <td>
+                                <span th:text="${item.categoria}"
+                                      class="badge bg-secondary categoria-badge"></span>
+                            </td>
+                            <td class="btn-actions">
+                                <div class="btn-group" role="group">
+                                    <a th:href="@{/admin/edit/{id}(id=${item.id})}"
+                                       class="btn btn-sm btn-outline-primary"
+                                       title="Editar">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form th:action="@{/admin/delete/{id}(id=${item.id})}"
+                                          method="post"
+                                          class="d-inline"
+                                          onsubmit="return confirm('¿Estás seguro de que deseas eliminar el platillo?');">
+                                        <button type="submit"
+                                                class="btn btn-sm btn-outline-danger"
+                                                title="Eliminar">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Fila cuando no hay datos -->
+                        <tr th:if="${#lists.isEmpty(menu)}">
+                            <td colspan="7" class="text-center text-muted py-4">
+                                <i class="fas fa-utensils fa-3x mb-3"></i>
+                                <p>No hay platillos en el menú</p>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addItemModal">
+                                    Agregar primer platillo
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Información adicional -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Estadísticas del Menú</h5>
+                            <p class="card-text">Total de platillos: <span th:text="${#lists.size(menu)}" class="badge bg-primary"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para agregar/editar platillo -->
+<div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addItemModalLabel">
+                    <span th:if="${editMode}">Editar Platillo</span>
+                    <span th:unless="${editMode}">Agregar Nuevo Platillo</span>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:object="${menuItem}" method="post" th:action="@{/admin/save}">
+                <!-- Campo oculto para el ID cuando se está editando -->
+                <input type="hidden" th:field="*{id}" th:if="${editMode}">
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre del Platillo</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="nombre"
+                                       th:field="*{nombre}"
+                                       th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''"
+                                       required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="precio" class="form-label">Precio (S/.)</label>
+                                <input type="number"
+                                       class="form-control"
+                                       id="precio"
+                                       th:field="*{precio}"
+                                       th:classappend="${#fields.hasErrors('precio')} ? 'is-invalid' : ''"
+                                       step="0.01"
+                                       required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <textarea class="form-control"
+                                  id="descripcion"
+                                  th:field="*{descripcion}"
+                                  th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid' : ''"
+                                  rows="3"
+                                  required></textarea>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="urlImagen" class="form-label">URL de la Imagen</label>
+                        <input type="url"
+                               class="form-control"
+                               id="urlImagen"
+                               th:field="*{urlImagen}"
+                               th:classappend="${#fields.hasErrors('urlImagen')} ? 'is-invalid' : ''"
+                               required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('urlImagen')}" th:errors="*{urlImagen}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="categoria" class="form-label">Categoría</label>
+                        <select class="form-select"
+                                id="categoria"
+                                th:field="*{categoria}"
+                                th:classappend="${#fields.hasErrors('categoria')} ? 'is-invalid' : ''"
+                                required>
+                            <option value="">Seleccionar categoría</option>
+                            <option value="Pollos">Pollos</option>
+                            <option value="Parrillas">Parrillas</option>
+                            <option value="Combos">Combos</option>
+                        </select>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a th:href="@{/admin/edit}" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">
+                        <span th:if="${editMode}">Actualizar Platillo</span>
+                        <span th:unless="${editMode}">Guardar Platillo</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+<script th:inline="javascript">
+    window.editMode = [[${editMode}]];
+</script>
+<script th:src="@{/js/editar-menu.js}"></script>
 </body>
 </html>
