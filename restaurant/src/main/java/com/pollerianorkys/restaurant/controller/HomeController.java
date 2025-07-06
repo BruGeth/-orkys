@@ -1,5 +1,6 @@
 package com.pollerianorkys.restaurant.controller;
 
+import com.pollerianorkys.restaurant.repository.MenuItemRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class HomeController {
+
+    private final MenuItemRepository menuItemRepository;
+
+    public HomeController(MenuItemRepository menuItemRepository) {
+        this.menuItemRepository = menuItemRepository;
+    }
 
     /**
      * Redirecciona la raíz a la página de inicio
@@ -34,7 +41,8 @@ public class HomeController {
      * Muestra la página de carta
      */
     @GetMapping("/carta")
-    public String showMenuPage() {
+    public String showMenuPage(Model model) {
+        model.addAttribute("platillos", menuItemRepository.findAll());
         return "carta";
     }
 
