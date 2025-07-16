@@ -1,0 +1,21 @@
+.table-container {
+    margin: 20px 0;
+}
+.img-thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+.btn-actions {
+    white-space: nowrap;
+}
+.precio {
+    font-weight: bold;
+    color: #28a745;
+}
+.categoria-badge {
+    font-size: 0.8rem;
+}
+.alert-container {
+    margin-top: 20px;
+}

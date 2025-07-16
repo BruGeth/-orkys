@@ -7,140 +7,69 @@
     <link rel="stylesheet" th:href="@{/css/carta.css}">
 </head>
 <body>
-    <!-- Incluir fragmento navbar -->
-    <nav th:replace="fragments/navbar :: navbar"></nav>
-   
-    <section class="hero">
-        <h1>NUESTRA CARTA</h1>
-        <p>Descubre los mejores sabores del pollo a la brasa peruano y platos tradicionales</p>
-    </section>
+<!-- Incluir fragmento navbar -->
+<nav th:replace="fragments/navbar :: navbar"></nav>
 
-    <div class="container">
-        <div class="section-title">
-            <h2>TODOS LOS PLATOS</h2>
-        </div>
+<section class="hero">
+    <h1>NUESTRA CARTA</h1>
+    <p>Descubre los mejores sabores del pollo a la brasa peruano y platos tradicionales</p>
+</section>
 
-        <div class="search-bar">
-            <input type="text" placeholder="Buscar por nombre, tipo o ingredientes...">
-            <button>Buscar</button>
-        </div>
+<div class="container">
+    <div class="section-title">
+        <h2>TODOS LOS PLATOS</h2>
+    </div>
 
-        <div class="filters">
-            <button class="filter-btn active">Todos</button>
-            <button class="filter-btn">Pollos</button>
-            <button class="filter-btn">Parrillas</button>
-            <button class="filter-btn">Combos</button>
-        </div>
+    <div class="search-bar">
+        <input type="text" placeholder="Buscar por nombre, tipo o ingredientes...">
+        <button>Buscar</button>
+    </div>
 
-        <div class="cards-grid">
-            <!-- Plato 1 - Pollo -->
-            <div class="card-item" data-rarity="pollo">
-                <div class="card-image">
-                    <img th:src="@{/img/PolloEntero.jpg}" alt="Pollo a la Brasa Entero">
-                </div>
-                <div class="card-info">
-                    <div class="card-name">Pollo a la Brasa Entero</div>
-                    <div class="card-type">Categoría: Pollos</div>
-                    <div class="card-stats">S/. 65.90</div>
-                    <div class="card-actions">
-                        <a href="#" class="card-btn details-btn">VER DETALLES</a>
-                        <a href="#" class="card-btn collection-btn">ORDENAR</a>
-                    </div>
-                </div>
+    <div class="filters">
+        <button class="filter-btn active">Todos</button>
+        <button class="filter-btn">Pollos</button>
+        <button class="filter-btn">Parrillas</button>
+        <button class="filter-btn">Combos</button>
+    </div>
+
+    <div class="cards-grid">
+        <div class="card-item" th:each="platillo : ${platillos}"
+             th:data-rarity="${platillo.categoria.toLowerCase() == 'pollos' ? 'pollo' :
+                                   platillo.categoria.toLowerCase() == 'parrillas' ? 'parrilla' :
+                                   platillo.categoria.toLowerCase() == 'combos' ? 'combo' :
+                                   platillo.categoria.toLowerCase()}">
+            <div class="card-image">
+                <img th:src="${platillo.urlImagen}" th:alt="${platillo.nombre}">
+                <div class="rarity-tag rara" th:if="${platillo.categoria.toLowerCase() == 'parrillas' || platillo.categoria.toLowerCase() == 'parrilla'}">FAVORITO</div>
+                <div class="rarity-tag legendaria" th:if="${platillo.categoria.toLowerCase() == 'combos' || platillo.categoria.toLowerCase() == 'combo'}">ESPECIAL</div>
             </div>
-
-            <!-- Plato 2 - Pollo -->
-            <div class="card-item" data-rarity="pollo">
-                <div class="card-image">
-                    <img th:src="@{/img/MedioPollo.png}" alt="1/2 Pollo a la Brasa">
-                </div>
-                <div class="card-info">
-                    <div class="card-name">1/2 Pollo a la Brasa</div>
-                    <div class="card-type">Categoría: Pollos</div>
-                    <div class="card-stats">S/. 37.90</div>
-                    <div class="card-actions">
-                        <a href="#" class="card-btn details-btn">VER DETALLES</a>
-                        <a href="#" class="card-btn collection-btn">ORDENAR</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Plato 3 - Parrilla -->
-            <div class="card-item" data-rarity="parrilla">
-                <div class="card-image">
-                    <img th:src="@{/img/Anticuchos.jpg}" alt="Anticuchos">
-                    <div class="rarity-tag rara">FAVORITO</div>
-                </div>
-                <div class="card-info">
-                    <div class="card-name">Anticuchos</div>
-                    <div class="card-type">Categoría: Parrilla</div>
-                    <div class="card-stats">S/. 29.90</div>
-                    <div class="card-actions">
-                        <a href="#" class="card-btn details-btn">VER DETALLES</a>
-                        <a href="#" class="card-btn collection-btn">ORDENAR</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Plato 4 - Parrilla -->
-            <div class="card-item" data-rarity="parrilla">
-                <div class="card-image">
-                    <img th:src="@{/img/ParrilladaFamiliar.jpeg}" alt="Parrillada Familiar">
-                </div>
-                <div class="card-info">
-                    <div class="card-name">Parrillada Familiar</div>
-                    <div class="card-type">Categoría: Parrilla</div>
-                    <div class="card-stats">S/. 89.90</div>
-                    <div class="card-actions">
-                        <a href="#" class="card-btn details-btn">VER DETALLES</a>
-                        <a href="#" class="card-btn collection-btn">ORDENAR</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Plato 5 - Combo -->
-            <div class="card-item" data-rarity="combo">
-                <div class="card-image">
-                    <img th:src="@{/img/ComboFamiliar.jpg}" alt="Combo Familiar">
-                    <div class="rarity-tag legendaria">ESPECIAL</div>
-                </div>
-                <div class="card-info">
-                    <div class="card-name">Combo Familiar Especial</div>
-                    <div class="card-type">Categoría: Combos</div>
-                    <div class="card-stats">S/. 99.90</div>
-                    <div class="card-actions">
-                        <a href="#" class="card-btn details-btn">VER DETALLES</a>
-                        <a href="#" class="card-btn collection-btn">ORDENAR</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Plato 6 - Combo -->
-            <div class="card-item" data-rarity="combo">
-                <div class="card-image">
-                    <img th:src="@{/img/ComboDos.jpeg}" alt="Combo para Dos">
-                    <div class="rarity-tag legendaria">ESPECIAL</div>
-                </div>
-                <div class="card-info">
-                    <div class="card-name">Combo para Dos</div>
-                    <div class="card-type">Categoría: Combos</div>
-                    <div class="card-stats">S/. 59.90</div>
-                    <div class="card-actions">
-                        <a href="#" class="card-btn details-btn">VER DETALLES</a>
-                        <a href="#" class="card-btn collection-btn">ORDENAR</a>
-                    </div>
+            <div class="card-info">
+                <div class="card-name" th:text="${platillo.nombre}">Nombre del Plato</div>
+                <div class="card-type" th:text="'Categoría: ' + ${platillo.categoria}">Categoría</div>
+                <div class="card-description" th:text="${platillo.descripcion}">Descripción</div>
+                <div class="card-stats" th:text="'S/. ' + ${#numbers.formatDecimal(platillo.precio, 1, 2)}">Precio</div>
+                <div class="card-actions">
+                    <a href="#" class="card-btn details-btn">VER DETALLES</a>
+                    <a href="#" class="card-btn collection-btn">ORDENAR</a>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Mensaje si no hay platillos -->
+    <div class="no-results" th:if="${#lists.isEmpty(platillos)}" style="text-align: center; padding: 50px;">
+        <h3>No hay platillos disponibles</h3>
+        <p>Estamos trabajando en actualizar nuestro menú</p>
+    </div>
+</div>
 
-    <!-- Incluir fragmento footer -->
-    <footer th:replace="fragments/footer :: footer"></footer>
-    
-    <!-- Incluir fragmento scripts -->
-    <th:block th:replace="fragments/head :: scripts"></th:block>
-    
-    <!-- Script específico para esta página -->
-    <script th:src="@{/js/carta.js}"></script>
+<!-- Incluir fragmento footer -->
+<footer th:replace="fragments/footer :: footer"></footer>
+
+<!-- Incluir fragmento scripts -->
+<th:block th:replace="fragments/head :: scripts"></th:block>
+
+<!-- Script específico para esta página -->
+<script th:src="@{/js/carta.js}"></script>
+
 </body>
 </html>

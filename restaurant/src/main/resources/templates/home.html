@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
     <head>
         <!-- Incluir fragmento head con título "Inicio" -->
     <th:block th:replace="fragments/head :: head(title='Inicio')"></th:block>
@@ -33,10 +33,9 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-
         <div class="container mt-5 pb-5">
             <div class="card-container row g-4">
-                <h2>LOS MAS VENDIDOS</h2>
+                <h2>LOS MÁS VENDIDOS</h2>
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card">
                         <img src="https://rokys.com/_next/image?url=https%3A%2F%2Ft2ks3pro.s3.amazonaws.com%2Fc8349a98-04f7-4181-959a-d9088d16442c.jpg&w=384&q=75" class="card-img-top" alt="...">

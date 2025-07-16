@@ -34,6 +34,7 @@ public class SecurityConfig {
                             "/complaints/book", "/libro-reclamaciones", "/carta", "/menu/carta", "/promociones",
                             "/locales", "/locations", "/promotions", "/nosotros", "/trabaja-con-nosotros",
                             "/terminos-promociones", "/about/**").permitAll()
+                    .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                     // Páginas que requieren autenticación
                     .anyRequest().authenticated()
             )
@@ -58,6 +59,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
