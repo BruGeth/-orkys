@@ -24,4 +24,8 @@ public interface UserService {
     void updateProfile(String username, UserProfileDto profileDto);
     
     boolean changePassword(String username, String currentPassword, String newPassword);
+
+    Optional<User> findByToken(String token);
+    void save(User user);
+
 }
