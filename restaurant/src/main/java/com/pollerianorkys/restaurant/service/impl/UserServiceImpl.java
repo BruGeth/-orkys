@@ -8,12 +8,13 @@ import com.pollerianorkys.restaurant.repository.AuthorityRepository;
 import com.pollerianorkys.restaurant.repository.UserRepository;
 import com.pollerianorkys.restaurant.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthorityRepository authorityRepository;
 
-    
+
     @Override
     @Transactional
     public User registerUser(UserRegistrationDto registrationDto) {
@@ -42,6 +43,11 @@ public class UserServiceImpl implements UserService {
         
         Authority rolDefault = authorityRepository.findById(2L).get();
 
+        // Genera token y expiración
+        String token = String.valueOf(new java.util.Random().nextInt(900000) + 100000);
+        LocalDateTime tokenExpiry = LocalDateTime.now().plusSeconds(30); // Tiempo de expiración del token (30 segundos)
+
+        // Crear el usuario a partir del DTO
         User user = User.builder()
                 .firstName(registrationDto.getFirstName())
                 .lastName(registrationDto.getLastName())
@@ -50,12 +56,24 @@ public class UserServiceImpl implements UserService {
                 .username(registrationDto.getUsername())
                 .password(passwordEncoder.encode(registrationDto.getPassword()))
                 .authority(rolDefault)
+                .verified(false) // Usuario no verificado
+                .verificationToken(token)
+                .tokenExpiry(tokenExpiry) // Asigna el token y su expiración
                 .build();
         
         // Guardar el usuario
-        return userRepository.save(user);
+        userRepository.save(user);
+        return user;
     }
-    
+
+    @Override
+    public Optional<User> findByToken(String token) { return userRepository.findByVerificationToken(token);}
+
+    @Override
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
     @Override
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
