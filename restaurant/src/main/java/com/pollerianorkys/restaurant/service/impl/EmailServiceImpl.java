@@ -48,4 +48,28 @@ public class EmailServiceImpl implements EmailService {
             throw new RuntimeException("No se pudo enviar el correo: " + e.getMessage());
         }
     }
+
+    @Override
+    public void sendPasswordResetEmail(String toEmail, String resetToken) {
+        String subject = "Recupera tu contraseña - Pollería Norkys";
+        String content = """
+            <div style="font-family: sans-serif;">
+                <h2 style="color: #198754;">Recuperación de contraseña</h2>
+                <p>Tu código de recuperación es:</p>
+                <div style="font-size: 24px; font-weight: bold; color: #dc3545;">%s</div>
+                <p>Este código expirará en <strong>10 minutos</strong>.</p>
+            </div>
+        """.formatted(resetToken);
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom(fromEmail);
+            helper.setTo(toEmail);
+            helper.setSubject(subject);
+            helper.setText(content, true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException("No se pudo enviar el correo: " + e.getMessage());
+        }
+    }
 }
