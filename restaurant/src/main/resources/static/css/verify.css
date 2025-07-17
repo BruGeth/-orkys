@@ -1,0 +1,42 @@
+body {
+  background: #c8e6c9;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.form-container {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  width: 100%;
+  margin: auto;
+  max-width: 500px;
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
+
+.form-control:focus {
+  outline: none;
+  box-shadow: none;
+  border: 1px solid #00833e;
+}
+
+/* Temporizador */
+#timer {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+#resendBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsivo */
+@media screen and (max-width: 575.98px) {
+  .form-container {
+    max-width: 90%;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 20px;
+  }
+}
