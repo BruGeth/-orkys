@@ -30,9 +30,10 @@ public class SecurityConfig {
                 // Recursos estáticos permitidos para todos
                     .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
                     // Páginas públicas
-                    .requestMatchers("/", "/home", "/auth/login", "/auth/register",
-                            "/complaints/book", "/libro-reclamaciones", "/carta", "/menu/carta", "/promociones",
-                            "/locales", "/locations", "/promotions", "/nosotros", "/trabaja-con-nosotros",
+                    .requestMatchers("/", "/home", "/auth/login", "/auth/register", "/auth/verify",
+                            "/auth/resend-token", "/complaints/book", "/libro-reclamaciones",
+                            "/carta", "/menu/carta", "/promociones", "/locales",
+                            "/locations", "/promotions", "/nosotros", "/trabaja-con-nosotros",
                             "/terminos-promociones", "/about/**").permitAll()
                     .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                     // Páginas que requieren autenticación
