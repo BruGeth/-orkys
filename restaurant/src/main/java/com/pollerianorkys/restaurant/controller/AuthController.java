@@ -3,6 +3,7 @@ package com.pollerianorkys.restaurant.controller;
 import com.pollerianorkys.restaurant.dto.LoginRequestDto;
 import com.pollerianorkys.restaurant.dto.UserRegistrationDto;
 import com.pollerianorkys.restaurant.model.User;
+import com.pollerianorkys.restaurant.service.EmailService;
 import com.pollerianorkys.restaurant.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,11 +16,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Controlador para manejar la autenticación de usuarios (registro, login)
@@ -31,6 +33,7 @@ public class AuthController {
 
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
+    private final EmailService emailService;
 
     /**
      * Muestra la página de inicio de sesión
@@ -95,29 +98,28 @@ public class AuthController {
                                      BindingResult result,
                                      RedirectAttributes redirectAttributes,
                                      HttpServletRequest request) {
+
         // Verificar si hay errores de validación
         if (result.hasErrors()) {
             return "register";
         }
-        
         try {
-            // Registrar usuario usando el DTO directamente
+            // Registrar al usuario con campos de verificación
             User registeredUser = userService.registerUser(registrationDto);
-            
-            // Autenticar automáticamente al usuario después del registro
-            try {
-                // Autologin usando Spring Security
-                request.login(registrationDto.getUsername(), registrationDto.getPassword());
-                
-                redirectAttributes.addFlashAttribute("success", 
-                    "¡Registro exitoso! Has iniciado sesión automáticamente.");
-                return "redirect:/home";
-            } catch (ServletException e) {
-                // Si falla el autologin, redirigir al login
-                redirectAttributes.addFlashAttribute("success", 
-                    "¡Registro exitoso! Por favor, inicia sesión con tus credenciales.");
-                return "redirect:/auth/login";
-            }
+
+            // Enviar correo de verificación
+            emailService.sendVerificationEmail(
+                    registeredUser.getEmail(),
+                    registeredUser.getVerificationToken()
+            );
+
+            // Mensaje y redirección a verificación
+            redirectAttributes.addFlashAttribute("success",
+                    "¡Registro exitoso! Verifica tu cuenta desde el correo.");
+            redirectAttributes.addFlashAttribute("email", registeredUser.getEmail());
+
+            return "redirect:/auth/verify";
+
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/auth/register";
@@ -137,4 +139,102 @@ public class AuthController {
         }
         return "redirect:/auth/login";
     }
+
+    /**
+     * Muestra el formulario de verificación de email
+     */
+    @GetMapping("/verify")
+    public String showVerificationForm(@ModelAttribute("email") String email, Model model) {
+        model.addAttribute("email", email != null ? email : "");
+
+        // Si el email ya está proporcionado, buscamos al usuario
+        userService.findByEmail(email).ifPresent(user -> model.addAttribute("user", user));
+        return "verify";
+    }
+
+    /**
+      Procesa la verificación de email
+     */
+    @PostMapping("/verify")
+    public String processVerification(@RequestParam("token") String token,
+                                      @RequestParam("email") String email,
+                                      RedirectAttributes redirectAttributes) {
+        Optional<User> optionalUser = userService.findByToken(token);
+
+        // Verifica si el usuario existe y si el token es válido
+        if (optionalUser.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "Token inválido.");
+            redirectAttributes.addFlashAttribute("email", email); // Mantener el email para reenvío
+            return "redirect:/auth/verify";
+        }
+
+
+
+        User user = optionalUser.get();
+        // Verifica si el usuario ya está verificado
+        if (user.getTokenExpiry().isBefore(LocalDateTime.now())) {
+            redirectAttributes.addFlashAttribute("error", "Token expirado. Reenvía uno nuevo.");
+            redirectAttributes.addFlashAttribute("email", user.getEmail()); // Mantener el email para reenvío
+            return "redirect:/auth/verify";
+        }
+
+
+        // Validación exitosa: activar cuenta
+        user.setVerified(true);
+        user.setVerificationToken(null);
+        user.setTokenExpiry(null);
+        user.setResendAttempts(0); // Reiniciar intentos de reenvío
+        userService.save(user); // Guardar cambios en la base de datos
+
+        redirectAttributes.addFlashAttribute("success", "¡Cuenta verificada! Ya puedes iniciar sesión.");
+        return "redirect:/auth/login";
+    }
+
+    /**
+     * Reenvía el token de verificación al correo del usuario
+     */
+    @PostMapping("/resend-token")
+    public String resendVerificationToken(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
+        Optional<User> optionalUser = userService.findByEmail(email);
+
+        // Verifica si el usuario existe
+        if (optionalUser.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "Correo no registrado.");
+            return "redirect:/auth/verify";
+        }
+
+        // Obtiene el usuario
+        User user = optionalUser.get();
+
+        // Si ya está verificado, no necesita nuevo código
+        if (user.isVerified()) {
+            redirectAttributes.addFlashAttribute("success", "Tu cuenta ya está verificada.");
+            return "redirect:/auth/login";
+        }
+
+        // Verifica si ha alcanzado el límite de reenvíos
+        if (user.getResendAttempts() >= 3) {
+            redirectAttributes.addFlashAttribute("error", "Has alcanzado el límite de reenvíos.");
+            redirectAttributes.addFlashAttribute("email", email);
+            return "redirect:/auth/verify";
+        }
+
+        //  Generamos nuevo token y tiempo de expiración
+        String newToken = String.valueOf(new java.util.Random().nextInt(900000) + 100000); //  código de 6 dígitos
+        LocalDateTime newExpiry = LocalDateTime.now().plusSeconds(30); // 30 segundos de expiración
+
+        // Actualiza el usuario con el nuevo token y expiración
+        user.setResendAttempts(user.getResendAttempts() + 1);
+        user.setVerificationToken(newToken);
+        user.setTokenExpiry(LocalDateTime.now().plusSeconds(30));
+        userService.save(user);
+
+        //  Reenvía el nuevo código
+        emailService.sendVerificationEmail(user.getEmail(), newToken);
+
+        redirectAttributes.addFlashAttribute("success", "Nuevo código enviado a tu correo.");
+        redirectAttributes.addFlashAttribute("email", email);
+        return "redirect:/auth/verify";
+    }
+
 }

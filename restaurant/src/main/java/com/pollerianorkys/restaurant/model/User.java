@@ -61,7 +61,21 @@ public class User {
     @NotBlank(message = "La contraseña es obligatoria")
     private String password;
 
+    // Estado de la cuenta (habilitada o no)
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private boolean verified = false;
+
+    @Column(length = 64)
+    private String verificationToken;
+
+    private LocalDateTime tokenExpiry;
+
+    // Número de intentos de reenvío del correo de verificación
+    @Column(name = "resend_attempts")
+    private int resendAttempts = 0;
+
 
 }

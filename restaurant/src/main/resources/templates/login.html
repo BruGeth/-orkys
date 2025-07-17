@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <!-- Incluir fragmento head con título "Iniciar Sesión" -->
-    <th:block th:replace="fragments/head :: head(title='Iniciar Sesión')"></th:block>
+    <th:block th:replace="~{fragments/head :: head(title='Iniciar Sesión')}"></th:block>
     <!-- CSS para autenticación -->
     <link rel="stylesheet" th:href="@{/css/auth-common.css}">
     <link rel="stylesheet" th:href="@{/css/login.css}">

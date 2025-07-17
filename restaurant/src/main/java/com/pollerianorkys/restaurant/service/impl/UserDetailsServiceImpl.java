@@ -27,6 +27,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findByUsernameOrEmail(username, username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con username o email: " + username));
 
+        if (!user.isVerified()) {
+            throw new UsernameNotFoundException("Debes verificar tu cuenta antes de iniciar sesión.");
+        }
         return new CustomUserDetails(user);
     }
 }
