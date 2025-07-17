@@ -1,9 +1,0 @@
-spring:
-  datasource:
-    username: root
-    password: null
-
-  mail:
-    username: gestornetflixutp@gmail.com
-    password: abuuxpvebxokppli
-
