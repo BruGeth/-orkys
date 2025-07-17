@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <!-- Incluir fragmento head con título "Editar menu" -->
+    <th:block th:replace="fragments/head :: head(title='Editar menu')"></th:block>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSS específico para home -->
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+
+    <link rel="stylesheet" th:href="@{/css/editar-menu.css}">
+</head>
+<body>
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    
+    <div class="container mt-4">
+        <h2>Detalle del Reclamo</h2>
+
+        <table class="table table-bordered">
+            <tr><th>ID:</th><td th:text="${reclamo.id}"></td></tr>
+            <tr><th>Nombre Completo:</th><td th:text="${reclamo.nombreCompleto}"></td></tr>
+            <tr><th>Documento:</th><td th:text="${reclamo.documento}"></td></tr>
+            <tr><th>Email:</th><td th:text="${reclamo.email}"></td></tr>
+            <tr><th>Celular:</th><td th:text="${reclamo.celular}"></td></tr>
+            <tr><th>Tipo de Reclamo:</th><td th:text="${reclamo.tipoReclamo}"></td></tr>
+            <tr><th>Detalle:</th><td th:text="${reclamo.detalleReclamo}"></td></tr>
+            <tr><th>Fecha Pedido:</th><td th:text="${reclamo.fechaPedido}"></td></tr>
+            <tr><th>Observaciones:</th><td th:text="${reclamo.observaciones}"></td></tr>
+        </table>
+
+        <a th:href="@{/complaints/listaReclamo}" class="btn btn-secondary">Volver</a>
+    </div>
+</body>
+</html>
