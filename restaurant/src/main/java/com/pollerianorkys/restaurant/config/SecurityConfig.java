@@ -34,7 +34,14 @@ public class SecurityConfig {
                             "/auth/resend-token", "/complaints/book", "/libro-reclamaciones",
                             "/carta", "/menu/carta", "/promociones", "/locales",
                             "/locations", "/promotions", "/nosotros", "/trabaja-con-nosotros",
-                            "/terminos-promociones", "/about/**").permitAll()
+                            "/terminos-promociones", "/about/**",
+                    // Rutas públicas para recuperación de contraseña
+                    "/auth/forgot-password",
+                    "/auth/reset-password-token",
+                    "/auth/verify-reset-token",
+                    "/auth/resend-reset-token",
+                    "/auth/change-password"
+            ).permitAll()
                     .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                     // Páginas que requieren autenticación
                     .anyRequest().authenticated()

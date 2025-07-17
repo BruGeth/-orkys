@@ -226,7 +226,7 @@ public class AuthController {
         // Actualiza el usuario con el nuevo token y expiración
         user.setResendAttempts(user.getResendAttempts() + 1);
         user.setVerificationToken(newToken);
-        user.setTokenExpiry(LocalDateTime.now().plusSeconds(30));
+        user.setTokenExpiry(newExpiry);
         userService.save(user);
 
         //  Reenvía el nuevo código
@@ -235,6 +235,160 @@ public class AuthController {
         redirectAttributes.addFlashAttribute("success", "Nuevo código enviado a tu correo.");
         redirectAttributes.addFlashAttribute("email", email);
         return "redirect:/auth/verify";
+    }
+
+    /**
+     * Muestra la página de recuperación de contraseña
+     */
+    @GetMapping("/forgot-password")
+    public String showForgotPasswordPage() {
+        return "fragments/forgot-password";
+    }
+
+    /**
+     * Procesa el formulario de recuperación de contraseña
+     */
+    @PostMapping("/forgot-password")
+    public String processForgotPassword(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
+        Optional<User> optionalUser = userService.findByEmail(email);
+        if (optionalUser.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "No existe una cuenta con ese correo electrónico.");
+            return "redirect:/auth/forgot-password";
+        }
+        User user = optionalUser.get();
+        // Reiniciar el contador de reenvíos al iniciar el proceso
+        user.setResendAttempts(0);
+        // Generar código de 6 dígitos
+        String resetToken = String.valueOf((int)(Math.random() * 900000) + 100000);
+        user.setResetToken(resetToken);
+        user.setResetTokenExpiry(LocalDateTime.now().plusMinutes(10));
+        userService.save(user);
+        // Enviar correo
+        emailService.sendPasswordResetEmail(user.getEmail(), resetToken);
+        // Redirigir directamente a la página de ingreso de código
+        redirectAttributes.addFlashAttribute("success", "Se ha enviado un código de recuperación a tu correo electrónico.");
+        redirectAttributes.addFlashAttribute("resendAttempts", 0);
+        return "redirect:/auth/reset-password-token?email=" + email;
+    }
+
+    /**
+     * Muestra la página para ingresar el código de recuperación
+     */
+    @GetMapping("/reset-password-token")
+    public String showResetTokenPage(@RequestParam("email") String email, Model model, @ModelAttribute("resendAttempts") Integer resendAttempts) {
+        model.addAttribute("email", email);
+        if (resendAttempts != null) {
+            model.addAttribute("resendAttempts", resendAttempts);
+        } else {
+            Optional<User> optionalUser = userService.findByEmail(email);
+            model.addAttribute("resendAttempts", optionalUser.map(User::getResendAttempts).orElse(0));
+        }
+        return "fragments/reset-password-token";
+    }
+
+    /**
+     * Procesa el código de recuperación ingresado
+     */
+    @PostMapping("/verify-reset-token")
+    public String verifyResetToken(@RequestParam("email") String email,
+                                   @RequestParam("resetToken") String resetToken,
+                                   RedirectAttributes redirectAttributes) {
+        Optional<User> optionalUser = userService.findByEmail(email);
+        if (optionalUser.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "No existe una cuenta con ese correo electrónico.");
+            return "redirect:/auth/forgot-password";
+        }
+        User user = optionalUser.get();
+        if (user.getResetToken() == null || user.getResetTokenExpiry() == null ||
+            !user.getResetToken().equals(resetToken) ||
+            user.getResetTokenExpiry().isBefore(LocalDateTime.now())) {
+            redirectAttributes.addFlashAttribute("error", "Código inválido o expirado. Solicita uno nuevo.");
+            redirectAttributes.addFlashAttribute("email", email);
+            return "redirect:/auth/reset-password-token?email=" + email;
+        }
+        // Aquí podrías redirigir a una página para cambiar la contraseña
+        redirectAttributes.addFlashAttribute("email", email);
+        redirectAttributes.addFlashAttribute("resetToken", resetToken);
+        return "redirect:/auth/change-password";
+    }
+
+    /**
+     * Reenvía el código de recuperación
+     */
+    @PostMapping("/resend-reset-token")
+    public String resendResetToken(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
+        Optional<User> optionalUser = userService.findByEmail(email);
+        if (optionalUser.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "No existe una cuenta con ese correo electrónico.");
+            return "redirect:/auth/forgot-password";
+        }
+        User user = optionalUser.get();
+        // Límite de reenvíos: 3
+        if (user.getResendAttempts() >= 3) {
+            redirectAttributes.addFlashAttribute("error", "Has alcanzado el límite de 3 reenvíos de código.");
+            redirectAttributes.addFlashAttribute("email", email);
+            redirectAttributes.addFlashAttribute("resendAttempts", user.getResendAttempts());
+            return "redirect:/auth/reset-password-token?email=" + email;
+        }
+        user.setResendAttempts(user.getResendAttempts() + 1);
+        String resetToken = String.valueOf((int)(Math.random() * 900000) + 100000);
+        user.setResetToken(resetToken);
+        user.setResetTokenExpiry(LocalDateTime.now().plusMinutes(10));
+        userService.save(user);
+        emailService.sendPasswordResetEmail(user.getEmail(), resetToken);
+        redirectAttributes.addFlashAttribute("success", "Se ha reenviado el código de recuperación a tu correo electrónico.");
+        redirectAttributes.addFlashAttribute("email", email);
+        redirectAttributes.addFlashAttribute("resendAttempts", user.getResendAttempts());
+        return "redirect:/auth/reset-password-token?email=" + email;
+    }
+
+    /**
+     * Muestra el formulario para cambiar la contraseña
+     */
+    @GetMapping("/change-password")
+    public String showChangePasswordPage(@ModelAttribute("email") String email,
+                                         @ModelAttribute("resetToken") String resetToken,
+                                         Model model) {
+        model.addAttribute("email", email);
+        model.addAttribute("resetToken", resetToken);
+        return "fragments/change-password";
+    }
+
+    /**
+     * Procesa el cambio de contraseña
+     */
+    @PostMapping("/change-password")
+    public String processChangePassword(@RequestParam("email") String email,
+                                        @RequestParam("resetToken") String resetToken,
+                                        @RequestParam("password") String password,
+                                        @RequestParam("confirmPassword") String confirmPassword,
+                                        RedirectAttributes redirectAttributes) {
+        Optional<User> optionalUser = userService.findByEmail(email);
+        if (optionalUser.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "No existe una cuenta con ese correo electrónico.");
+            return "redirect:/auth/forgot-password";
+        }
+        User user = optionalUser.get();
+        if (user.getResetToken() == null || user.getResetTokenExpiry() == null ||
+            !user.getResetToken().equals(resetToken) ||
+            user.getResetTokenExpiry().isBefore(LocalDateTime.now())) {
+            redirectAttributes.addFlashAttribute("error", "Código inválido o expirado. Solicita uno nuevo.");
+            redirectAttributes.addFlashAttribute("email", email);
+            return "redirect:/auth/reset-password-token?email=" + email;
+        }
+        if (!password.equals(confirmPassword)) {
+            redirectAttributes.addFlashAttribute("error", "Las contraseñas no coinciden.");
+            redirectAttributes.addFlashAttribute("email", email);
+            redirectAttributes.addFlashAttribute("resetToken", resetToken);
+            return "redirect:/auth/change-password";
+        }
+        // Cambiar la contraseña y limpiar el token
+        user.setPassword(userService.encodePassword(password));
+        user.setResetToken(null);
+        user.setResetTokenExpiry(null);
+        userService.save(user);
+        redirectAttributes.addFlashAttribute("success", "¡Contraseña cambiada exitosamente! Ya puedes iniciar sesión.");
+        return "redirect:/auth/login";
     }
 
 }
