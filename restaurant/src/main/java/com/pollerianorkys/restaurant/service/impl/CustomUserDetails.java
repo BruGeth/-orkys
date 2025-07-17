@@ -30,9 +30,7 @@ public class CustomUserDetails implements UserDetails {
     }
 
     @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
-    }
+    public boolean isEnabled() { return usuario.isVerified(); }
 
     public String getCorreo(){
         return usuario.getEmail();
