@@ -4,14 +4,12 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <!-- Fragmento de Navbar -->
     <nav th:fragment="navbar" class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a th:href="@{/home}"><img class="logo" th:src="@{/img/logo.png}" alt="Logo Ñorkys"></a>
 
-            <!-- LOGIN BUTTON -->
+            <!-- BOTONES MÓVIL -->
             <div class="d-lg-none d-flex align-items-center ms-auto gap-2">
-                <!-- Si el usuario está autenticado, mostrar icono de usuario con menú desplegable -->
                 <div sec:authorize="isAuthenticated()" class="dropdown">
                     <button class="navbar-toggler btn-login-toggler" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="login-toggler-icon d-flex justify-content-center align-items-center">
@@ -21,7 +19,8 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" th:href="@{/user/profile}">Mi Perfil</a></li>
                         <li><a class="dropdown-item" th:href="@{/user#orders}">Mis Pedidos</a></li>
-                        <li><a class="dropdown-item" th:href="@{/admin/edit}" sec:authorize="hasAuthority('ROLE_ADMIN')">Editar carta</a></li>
+                        <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a class="dropdown-item" th:href="@{/complaints/listaReclamo}">Ver Reclamos</a></li>
+                        <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a class="dropdown-item" th:href="@{/admin/edit}">Editar Carta</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form th:action="@{/auth/logout}" method="post" class="dropdown-item p-0">
@@ -30,27 +29,24 @@
                         </li>
                     </ul>
                 </div>
-                
-                <!-- Si el usuario no está autenticado, mostrar botón de login -->
+
                 <button sec:authorize="!isAuthenticated()" class="navbar-toggler btn-login-toggler" type="button" onclick="location.href='/auth/login'">
                     <span class="login-toggler-icon d-flex justify-content-center align-items-center">
                         <i class="fas fa-user"></i>
                     </span>
                 </button>
-            
-                <!-- NAV BUTTON -->
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
 
-            <!-- MENU FOR PC -->
+            <!-- MENÚ PARA PC -->
             <ul class="navbar-nav d-none d-lg-flex ms-auto menu-pc">
                 <li class="nav-item px-3"><a th:href="@{/carta}" class="nav-link">CARTA</a></li>
                 <li class="nav-item px-3"><a th:href="@{/promociones}" class="nav-link">PROMOCIONES</a></li>
                 <li class="nav-item px-3"><a th:href="@{/locales}" class="nav-link">LOCALES</a></li>
 
-                <!-- Si el usuario está autenticado, mostrar menú desplegable -->
                 <li sec:authorize="isAuthenticated()" class="nav-item px-3 dropdown">
                     <a class="nav-link link--login dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <span sec:authentication="name"></span>
@@ -59,8 +55,8 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" th:href="@{/user/profile}">Mi Perfil</a></li>
                         <li><a class="dropdown-item" th:href="@{/user/profile#orders}">Mis Pedidos</a></li>
-                        <!-- LÍNEA PARA ADMIN - USAR SOLO EL ENLACE CON sec:authorize -->
-                        <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a class="dropdown-item" th:href="@{/admin/edit}">Editar carta</a></li>
+                        <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a class="dropdown-item" th:href="@{/complaints/listaReclamo}">Ver Reclamos</a></li>
+                        <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a class="dropdown-item" th:href="@{/admin/edit}">Editar Carta</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form th:action="@{/auth/logout}" method="post" class="dropdown-item p-0">
@@ -70,7 +66,6 @@
                     </ul>
                 </li>
 
-                <!-- Si el usuario no está autenticado, mostrar enlace de login -->
                 <li sec:authorize="!isAuthenticated()" class="nav-item px-3">
                     <a th:href="@{/auth/login}" class="nav-link link--login">
                         INICIAR SESIÓN
@@ -79,31 +74,32 @@
                 </li>
             </ul>
 
-            <!-- OFF CANVAS MAIN CONTAINER -->
+            <!-- OFFCANVAS (MÓVIL) -->
             <section class="offcanvas offcanvas-start" id="menuLateral" tabindex="-1">
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title">MENÚ</h5>
                     <button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="offcanvas"></button>
                 </div>
-                <!-- OFF CANVAS MENU LINKS START -->
                 <div class="offcanvas-body d-flex flex-column justify-content-between px-0">
                     <ul class="navbar-nav justify-content-evenly">
                         <li class="nav-item p-3"><a th:href="@{/carta}" class="nav-link">CARTA</a></li>
                         <li class="nav-item p-3"><a th:href="@{/promociones}" class="nav-link">PROMOCIONES</a></li>
                         <li class="nav-item p-3"><a th:href="@{/locales}" class="nav-link">LOCALES</a></li>
 
-                        <!-- Opciones de usuario autenticado -->
                         <li sec:authorize="isAuthenticated()" class="nav-item p-3"><a th:href="@{/user/profile}" class="nav-link">MI PERFIL</a></li>
                         <li sec:authorize="isAuthenticated()" class="nav-item p-3"><a th:href="@{/user/orders}" class="nav-link">MIS PEDIDOS</a></li>
-                        <!-- AGREGAR ESTA LÍNEA PARA ADMIN EN MÓVIL -->
+
+                        <!-- ADMIN: Ver Reclamos y Editar Carta -->
+                        <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item p-3"><a th:href="@{/complaints/listaReclamo}" class="nav-link">VER RECLAMOS</a></li>
                         <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item p-3"><a th:href="@{/admin/edit}" class="nav-link">EDITAR CARTA</a></li>
+
                         <li sec:authorize="isAuthenticated()" class="nav-item p-3">
                             <form th:action="@{/auth/logout}" method="post">
                                 <button type="submit" class="btn btn-link text-white p-0">CERRAR SESIÓN</button>
                             </form>
                         </li>
                     </ul>
-                    <!-- SOCIAL MEDIA LINKS -->
+
                     <div class="d-lg-none align-self-center py-3">
                         <a href="#"><i class="bi bi-facebook px-2 fs-2"></i></a>
                         <a href="#"><i class="bi bi-instagram px-2 fs-2"></i></a>
@@ -111,7 +107,7 @@
                     </div>
                 </div>
             </section>
-            <!-- OFFCANVAS MAIN CONTAINER END -->
+
         </div>
     </nav>
 </body>

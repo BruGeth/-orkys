@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Map;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * Controlador para manejar el libro de reclamaciones
@@ -23,6 +24,7 @@ import java.util.Map;
 public class ComplaintsController {
 
     private final ReclamoQuejaRepository reclamorepositorio;
+
     /**
      * Muestra la página del libro de reclamaciones
      */
@@ -35,9 +37,9 @@ public class ComplaintsController {
     /**
      * Procesa el envío de una reclamación
      */
-  @PostMapping("/submit")
+    @PostMapping("/submit")
     public String processComplaint(@RequestParam Map<String, String> formData,
-                                   RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes) {
 
         try {
             ReclamoQueja reclamo = new ReclamoQueja();
@@ -80,6 +82,24 @@ public class ComplaintsController {
 
         return "redirect:/complaints/book";
     }
+
+    //metodo para que el admin vea todos los reclamos
+    @GetMapping("/listaReclamo")
+    public String listaReclamo(Model model) {
+        model.addAttribute("reclamos", reclamorepositorio.findAll());
+        return "Reclamos";
+    }
+
+    //metodo para ver el el detalle del reclamo 
+    @GetMapping("/view/{id}")
+    public String verDetalleReclamo(@PathVariable Long id, Model model) {
+        ReclamoQueja reclamo = reclamorepositorio.findById(id).orElse(null);
+        if (reclamo == null) {
+            model.addAttribute("error", "Reclamo no encontrado");
+            return "redirect:/complaints/listaReclamo";
+        }
+
+        model.addAttribute("reclamo", reclamo);
+        return "detalleReclamo";
+    }
 }
-
-
