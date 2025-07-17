@@ -304,6 +304,7 @@ public class AuthController {
             user.getResetTokenExpiry().isBefore(LocalDateTime.now())) {
             redirectAttributes.addFlashAttribute("error", "Código inválido o expirado. Solicita uno nuevo.");
             redirectAttributes.addFlashAttribute("email", email);
+            redirectAttributes.addFlashAttribute("resendAttempts", user.getResendAttempts());
             return "redirect:/auth/reset-password-token?email=" + email;
         }
         // Aquí podrías redirigir a una página para cambiar la contraseña
