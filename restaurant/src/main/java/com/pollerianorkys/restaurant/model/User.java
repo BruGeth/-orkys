@@ -77,5 +77,11 @@ public class User {
     @Column(name = "resend_attempts")
     private int resendAttempts = 0;
 
+    // Token de recuperación de contraseña
+    private String resetToken;
+
+    // Expiración del token de recuperación
+    private LocalDateTime resetTokenExpiry;
+
 
 }
