@@ -143,4 +143,9 @@ public class UserServiceImpl implements UserService {
         
         return true;
     }
+
+    @Override
+    public String encodePassword(String rawPassword) {
+        return passwordEncoder.encode(rawPassword);
+    }
 }

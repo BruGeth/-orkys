@@ -27,5 +27,6 @@ public interface UserService {
 
     Optional<User> findByToken(String token);
     void save(User user);
+    String encodePassword(String rawPassword);
 
 }
