@@ -47,8 +47,8 @@ class SessionTimeoutManager {
     }
     
     handleUserActivity() {
-        // Solo resetear si no estamos en proceso de logout
-        if (!this.loggingOut) {
+        // Solo resetear si no estamos en proceso de logout Y si no hay modal de advertencia visible
+        if (!this.loggingOut && !this.warningShown) {
             this.resetSessionTimer();
         }
     }
@@ -70,8 +70,14 @@ class SessionTimeoutManager {
     }
     
     resetSessionTimer() {
+        // Solo iniciar nuevo timer, NO ocultar advertencia automáticamente
+        this.startSessionTimer();
+    }
+    
+    resetSessionTimerAndHideWarning() {
+        // Método específico para cuando el usuario explícitamente quiere continuar
         if (this.warningShown) {
-            console.log('🔄 Actividad detectada - Ocultando advertencia y reseteando timer');
+            console.log('🔄 Usuario eligió continuar - Ocultando advertencia y reseteando timer');
             this.hideWarning();
         }
         
@@ -196,8 +202,7 @@ class SessionTimeoutManager {
     
     extendSession() {
         console.log('✅ Usuario solicitó extender sesión');
-        this.hideWarning();
-        this.resetSessionTimer();
+        this.resetSessionTimerAndHideWarning();
     }
     
     logoutNow() {
