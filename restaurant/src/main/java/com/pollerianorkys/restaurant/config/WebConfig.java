@@ -1,5 +1,6 @@
 package com.pollerianorkys.restaurant.config;
 
+import com.pollerianorkys.restaurant.security.SessionTimeoutInterceptor;
 import java.util.Locale;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,12 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    private final SessionTimeoutInterceptor sessionTimeoutInterceptor;
+
+    public WebConfig(SessionTimeoutInterceptor sessionTimeoutInterceptor) {
+        this.sessionTimeoutInterceptor = sessionTimeoutInterceptor;
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -36,7 +43,16 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        // Interceptor para manejo de idiomas (i18n)
         registry.addInterceptor(localeChangeInterceptor());
+        
+        // Interceptor para timeout de sesión (aplicar solo a rutas autenticadas)
+        registry.addInterceptor(sessionTimeoutInterceptor)
+                .excludePathPatterns("/css/**", "/js/**", "/img/**", 
+                                   "/auth/login", "/auth/register", "/", "/home",
+                                   "/complaints/book", "/libro-reclamaciones", 
+                                   "/carta", "/menu/carta", "/promociones", 
+                                   "/locales", "/nosotros", "/trabaja-con-nosotros");
     }
 
     @Bean
