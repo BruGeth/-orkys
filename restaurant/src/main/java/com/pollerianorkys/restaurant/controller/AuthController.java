@@ -39,8 +39,33 @@ public class AuthController {
      * Muestra la página de inicio de sesión
      */
     @GetMapping("/login")
-    public String showLoginPage(Model model) {
+    public String showLoginPage(Model model, HttpServletRequest request) {
         model.addAttribute("loginRequest", new LoginRequestDto());
+        
+        // Manejar diferentes tipos de mensajes de sesión
+        String timeout = request.getParameter("timeout");
+        String expired = request.getParameter("expired");
+        String invalid = request.getParameter("invalid");
+        String logout = request.getParameter("logout");
+        String error = request.getParameter("error");
+        
+        if (timeout != null) {
+            model.addAttribute("timeoutMessage", 
+                "Tu sesión ha expirado por inactividad (1 minuto). Por favor, inicia sesión nuevamente.");
+        } else if (expired != null) {
+            model.addAttribute("expiredMessage", 
+                "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.");
+        } else if (invalid != null) {
+            model.addAttribute("invalidMessage", 
+                "Sesión inválida. Por favor, inicia sesión nuevamente.");
+        } else if (logout != null) {
+            model.addAttribute("logoutMessage", 
+                "Has cerrado sesión correctamente.");
+        } else if (error != null) {
+            model.addAttribute("errorMessage", 
+                "Credenciales inválidas. Por favor, verifica tu usuario y contraseña.");
+        }
+        
         return "login";
     }
 
