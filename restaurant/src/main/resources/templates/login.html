@@ -16,12 +16,45 @@
 
         <!-- Mensajes de alerta -->
         <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i>
             <span th:text="${success}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         
         <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>
             <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <!-- Mensajes específicos de seguridad -->
+        <div th:if="${timeoutMessage}" class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="bi bi-clock me-2"></i>
+            <strong>Sesión Expirada:</strong> <span th:text="${timeoutMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <div th:if="${expiredMessage}" class="alert alert-info alert-dismissible fade show" role="alert">
+            <i class="bi bi-info-circle me-2"></i>
+            <strong>Sesión Cerrada:</strong> <span th:text="${expiredMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <div th:if="${invalidMessage}" class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="bi bi-shield-exclamation me-2"></i>
+            <strong>Sesión Inválida:</strong> <span th:text="${invalidMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <div th:if="${logoutMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-box-arrow-right me-2"></i>
+            <span th:text="${logoutMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-x-circle me-2"></i>
+            <span th:text="${errorMessage}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 
